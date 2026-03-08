@@ -1,1 +1,30 @@
 @import "tailwindcss";
+@import url("https://www.nerdfonts.com/assets/css/webfont.css");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap");
+
+@theme {
+  /* light mode default */
+  --color-bg-dark: hsl(0, 0%, 90%);
+  --color-bg: hsl(0, 0%, 95%);
+  --color-bg-light: hsl(0, 0%, 100%);
+  --color-text: hsl(0, 0%, 5%);
+  --color-text-muted: hsl(0, 0%, 30%);
+  --color-border: hsl(0, 0%, 90%);
+  --color-accent: hsl(240, 100%, 35%);
+  --color-accent-text: hsl(0, 0%, 95%);
+
+  /* font */
+  --font-mono: "DM Mono", monospace;
+}
+
+.dark {
+  /* dark mode toggle */
+  --color-bg-dark: hsl(0, 0%, 5%);
+  --color-bg: hsl(0, 0%, 15%);
+  --color-bg-light: hsl(0, 0%, 30%);
+  --color-text: hsl(0, 0%, 95);
+  --color-text-muted: hsl(0, 0%, 70);
+  --color-border: hsl(0, 0%, 30%);
+  --color-accent: hsl(240, 75%, 30%);
+  --color-accent-text: hsl(0, 0%, 95%);
+}
