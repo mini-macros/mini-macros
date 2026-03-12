@@ -1,20 +1,25 @@
 import type { IconType } from "react-icons";
 
-interface ButtonProps {
+interface IconButtonProps {
   Icon: IconType;
   styles?: string;
   tooltip?: string;
   handleClick: () => void;
 }
 
-function Button({ Icon, styles = "", tooltip = "", handleClick }: ButtonProps) {
+function IconButton({
+  Icon,
+  styles = "",
+  tooltip = "",
+  handleClick,
+}: IconButtonProps) {
   return (
     <button className={styles} title={tooltip} onClick={handleClick}>
-      <div className="inline-block mt-1 mr-2 ml-2">
+      <div className="inset-0 flex items-center justify-center">
         <Icon size={18} />
       </div>
     </button>
   );
 }
 
-export default Button;
+export default IconButton;
