@@ -39,6 +39,7 @@ function App() {
         onSave={onCreateMacroSave}
         isOpen={createMacroModalVisiblity}
       />
+      <section></section>
     </div>
   );
 }

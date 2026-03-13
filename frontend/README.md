@@ -6,10 +6,11 @@ First TODOS:
 - [x] make create macro form modal
 - [x] make button UI component
 - [x] add state to CreateMacroModal for visibility
-- [ ] make dashboard page component
+- [x] organize styles
 - [ ] make welcome modal
 - [ ] add styles to Macro component
+- [ ] create DropdownButton component
+- [ ] style and finish FixedMenu for MacroContentEditor component
+- [ ] handle image compression and file handling for MacroContentEditor
 - [ ] handle saving new macro data to localStorage
 - [ ] add failsafes for required data in CreateMacroModal
-- [ ] write tests for components
-- [ ] organize styles

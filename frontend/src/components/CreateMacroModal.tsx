@@ -26,6 +26,7 @@ interface CreateMacroModalProps {
 function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
   if (!isOpen) return null;
 
+  // TODO: make the sups red when required not input on save
   return (
     <div className={modalStyles}>
       <h2 className={headingStyles}>Create New Macro</h2>
@@ -37,7 +38,7 @@ function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
       />
       <br />
       <label htmlFor="macro-title" className={titleLabelStyles}>
-        Macro Title:
+        Macro Title <sup>*</sup>
       </label>
       <input
         className={inputStyles}
@@ -46,7 +47,9 @@ function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
         maxLength={64}
         placeholder="My Macro"
       />
-      <label className={contentLabelStyles}>Macro Content:</label>
+      <label className={contentLabelStyles}>
+        Macro Content <sup>*</sup>
+      </label>
       <MacroContentEditor styles={macroContentEditorStyles} />
       <TextButton
         styles={saveBtnStyles}
