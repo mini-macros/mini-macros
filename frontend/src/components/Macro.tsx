@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// TODO: fix styles
 const styles = "p-20 m-10 border-black";
 
 // TODO: add props for server side

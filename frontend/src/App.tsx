@@ -1,17 +1,27 @@
+import { useState } from "react";
+import CreateMacroModal from "./components/CreateMacroModal";
+// import Macro from "./components/Macro";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
-// NOTE: for testing
-import CreateMacroModal from "./components/CreateMacroModal";
+import {
+  baseStyles,
+  navStyles,
+  createMacroBtnStyles,
+} from "./helpers/app-styles";
 
-const baseStyles = "font-mono";
-const navStyles = "border-border bg-bg p-2 rounded-full m-5 shadow-md";
-const createMacroBtnStyles =
-  "rounded-full size-12 p-2 m-1 ml-2 border-border text-text bg-bg-light shadow-md hover:bg-bg-dark";
 const createMacroBtnTooltip = "Create Macro";
-// TODO: open create macro modal on click
-const onCreateMacroBtnClick = () => console.log("Clicked!");
 
 function App() {
+  const [createMacroModalVisiblity, setCreateMacroModalVisibility] =
+    useState(false);
+  const onCreateMacroBtnClick = () => setCreateMacroModalVisibility(true);
+  const onCreateMacroSave = () => {
+    // TODO: save to localStorage
+    console.log("saved!");
+    setCreateMacroModalVisibility(false);
+  };
+  const onCreateMacroClose = () => setCreateMacroModalVisibility(false);
+
   // TODO: add search bar
   // TODO: add menu button/dropdown
   return (
@@ -24,7 +34,11 @@ function App() {
           handleClick={onCreateMacroBtnClick}
         />
       </nav>
-      <CreateMacroModal />
+      <CreateMacroModal
+        onClose={onCreateMacroClose}
+        onSave={onCreateMacroSave}
+        isOpen={createMacroModalVisiblity}
+      />
     </div>
   );
 }
