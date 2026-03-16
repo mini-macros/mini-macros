@@ -27,6 +27,7 @@ function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
   if (!isOpen) return null;
 
   // TODO: make the sups red when required not input on save
+  // TODO: make borders red when required not input on save
   return (
     <div className={modalStyles}>
       <h2 className={headingStyles}>Create New Macro</h2>
@@ -34,7 +35,7 @@ function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
         styles={closeBtnStyles}
         Icon={IoClose}
         tooltip={closeBtnTooltip}
-        handleClick={onClose}
+        onClick={onClose}
       />
       <br />
       <label htmlFor="macro-title" className={titleLabelStyles}>
@@ -55,7 +56,7 @@ function CreateMacroModal({ onClose, onSave, isOpen }: CreateMacroModalProps) {
         styles={saveBtnStyles}
         text={saveBtnText}
         tooltip={saveBtnTooltip}
-        handleClick={onSave}
+        onClick={onSave}
       />
     </div>
   );

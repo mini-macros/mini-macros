@@ -31,7 +31,7 @@ function App() {
           styles={createMacroBtnStyles}
           Icon={FaPlus}
           tooltip={createMacroBtnTooltip}
-          handleClick={onCreateMacroBtnClick}
+          onClick={onCreateMacroBtnClick}
         />
       </nav>
       <CreateMacroModal

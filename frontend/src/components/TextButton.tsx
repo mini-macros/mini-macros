@@ -2,17 +2,17 @@ interface TextButtonProps {
   text?: string;
   styles?: string;
   tooltip?: string;
-  handleClick: () => void;
+  onClick: () => void;
 }
 
 function TextButton({
   text = "",
   styles = "",
   tooltip = "",
-  handleClick,
+  onClick: onClick,
 }: TextButtonProps) {
   return (
-    <button className={styles} title={tooltip} onClick={handleClick}>
+    <button className={styles} title={tooltip} onClick={onClick}>
       {text}
     </button>
   );

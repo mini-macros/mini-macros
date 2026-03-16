@@ -4,17 +4,17 @@ interface IconButtonProps {
   Icon: IconType;
   styles?: string;
   tooltip?: string;
-  handleClick: () => void;
+  onClick: () => void;
 }
 
 function IconButton({
   Icon,
   styles = "",
   tooltip = "",
-  handleClick,
+  onClick: onClick,
 }: IconButtonProps) {
   return (
-    <button className={styles} title={tooltip} onClick={handleClick}>
+    <button className={styles} title={tooltip} onClick={onClick}>
       <div className="inset-0 flex items-center justify-center">
         <Icon size={18} />
       </div>
