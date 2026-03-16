@@ -2,7 +2,7 @@ import TextButton from "./TextButton";
 import type { MacroCardProps } from "../helpers/types";
 import { macroStyles } from "../helpers/macro-styles";
 
-function MacroCard({ title, content }: MacroCardProps) {
+function MacroCard({ id, title, content }: MacroCardProps) {
   function handleClick() {
     navigator.clipboard
       .writeText(content)
@@ -16,7 +16,7 @@ function MacroCard({ title, content }: MacroCardProps) {
   }
 
   return (
-    <div className={macroStyles}>
+    <div className={macroStyles} id={id}>
       <TextButton onClick={handleClick} text={title} />
     </div>
   );
