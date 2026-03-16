@@ -1,15 +1,17 @@
-import { useEditor, EditorContent } from "@tiptap/react";
+import { EditorContent } from "@tiptap/react";
 import { Editor } from "@tiptap/core";
-import { TextStyleKit } from "@tiptap/extension-text-style";
-import StarterKit from "@tiptap/starter-kit";
+
+interface MacroContentEditorProps {
+  styles?: string;
+  editor: Editor;
+}
 
 const formatEditor =
   "[&_.ProseMirror]:h-full [&_.ProseMirror]:w-full h-full w-full [&_.ProseMirror]:outline-none";
 
-function MacroContentEditor({ styles }: { styles: string }) {
-  const editor = useEditor({
-    extensions: [TextStyleKit, StarterKit],
-  });
+function MacroContentEditor({ styles, editor }: MacroContentEditorProps) {
+  // TODO: add error handling for null editor
+  if (!editor) return;
 
   return (
     <div className={styles}>

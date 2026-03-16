@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CreateMacroModal from "./components/CreateMacroModal";
-// import Macro from "./components/Macro";
+//import Macro from "./components/Macro";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
 import {
@@ -15,11 +15,6 @@ function App() {
   const [createMacroModalVisiblity, setCreateMacroModalVisibility] =
     useState(false);
   const onCreateMacroBtnClick = () => setCreateMacroModalVisibility(true);
-  const onCreateMacroSave = () => {
-    // TODO: save to localStorage
-    console.log("saved!");
-    setCreateMacroModalVisibility(false);
-  };
   const onCreateMacroClose = () => setCreateMacroModalVisibility(false);
 
   // TODO: add search bar
@@ -36,7 +31,6 @@ function App() {
       </nav>
       <CreateMacroModal
         onClose={onCreateMacroClose}
-        onSave={onCreateMacroSave}
         isOpen={createMacroModalVisiblity}
       />
       <section></section>

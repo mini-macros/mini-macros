@@ -1,7 +1,7 @@
-import { useState } from "react";
+import TextButton from "./TextButton";
 
 // TODO: fix styles
-const styles = "p-20 m-10 border-black";
+const macroStyles = "p-20 m-10 border-black";
 
 // TODO: add props for server side
 interface MacroProps {
@@ -10,10 +10,7 @@ interface MacroProps {
 }
 
 function Macro({ title, content }: MacroProps) {
-  const [count, setCount] = useState(0);
-
   function handleClick() {
-    setCount(count + 1);
     navigator.clipboard
       .writeText(content)
       .then(() => {
@@ -26,8 +23,8 @@ function Macro({ title, content }: MacroProps) {
   }
 
   return (
-    <div className={styles}>
-      <button onClick={handleClick}>{title}</button>
+    <div className={macroStyles}>
+      <TextButton onClick={handleClick} text={title} />
     </div>
   );
 }
