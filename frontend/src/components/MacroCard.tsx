@@ -1,10 +1,8 @@
 import TextButton from "./TextButton";
-import type { MacroProps } from "../helpers/types";
+import type { MacroCardProps } from "../helpers/types";
+import { macroStyles } from "../helpers/macro-styles";
 
-// TODO: fix styles
-const macroStyles = "p-20 m-10 border-black";
-
-function Macro({ title, content }: MacroProps) {
+function MacroCard({ title, content }: MacroCardProps) {
   function handleClick() {
     navigator.clipboard
       .writeText(content)
@@ -24,4 +22,4 @@ function Macro({ title, content }: MacroProps) {
   );
 }
 
-export default Macro;
+export default MacroCard;

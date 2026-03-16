@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CreateMacroModal from "./components/CreateMacroModal";
-//import Macro from "./components/Macro";
+import MacroCard from "./components/MacroCard";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
 import {
@@ -9,6 +9,8 @@ import {
   createMacroBtnStyles,
 } from "./helpers/app-styles";
 
+const testString =
+  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 const createMacroBtnTooltip = "Create Macro";
 
 function App() {
@@ -22,19 +24,27 @@ function App() {
   return (
     <div className={baseStyles}>
       <nav className={navStyles}>
-        <IconButton
-          styles={createMacroBtnStyles}
-          Icon={FaPlus}
-          tooltip={createMacroBtnTooltip}
-          onClick={onCreateMacroBtnClick}
-        />
+        <CreateMacroButton onClick={onCreateMacroBtnClick} />
       </nav>
       <CreateMacroModal
         onClose={onCreateMacroClose}
         isOpen={createMacroModalVisiblity}
       />
-      <section></section>
+      <section>
+        <MacroCard title={testString} content="content" />
+      </section>
     </div>
+  );
+}
+
+function CreateMacroButton({ onClick }: { onClick: () => void }) {
+  return (
+    <IconButton
+      styles={createMacroBtnStyles}
+      Icon={FaPlus}
+      tooltip={createMacroBtnTooltip}
+      onClick={onClick}
+    />
   );
 }
 

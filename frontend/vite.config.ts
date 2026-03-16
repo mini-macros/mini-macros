@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 
 import { defineConfig } from "vite";
+import { playwright } from "@vitest/browser-playwright";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -8,9 +9,33 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
-    environment: "jsdom",
-    globals: true,
-    include: ["./**/*.test.{tsx, ts}"],
-    exclude: ["**/node_modules/**", "**/.git/**"],
+    projects: [
+      {
+        test: {
+          environment: "jsdom",
+          globals: true,
+          name: "unit",
+          include: ["./**/*.test.{tsx, ts}"],
+          exclude: ["**/node_modules/**", "**/.git/**"],
+        },
+      },
+      {
+        test: {
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({
+              contextOptions: {
+                permissions: ["clipboard-read", "clipboard-write"],
+              },
+            }),
+            instances: [{ browser: "chromium" }],
+          },
+          name: "e2e",
+          include: ["./**/*.test.e2e.{tsx, ts}"],
+          exclude: ["**/node_modules/**", "**/.git/**"],
+        },
+      },
+    ],
   },
 });

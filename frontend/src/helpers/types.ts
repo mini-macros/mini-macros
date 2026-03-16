@@ -1,8 +1,7 @@
 import { Editor } from "@tiptap/core";
 import type { IconType } from "react-icons";
 
-// TODO: add props for server side
-export interface MacroProps {
+export interface MacroCardProps {
   title: string;
   content: string;
 }
