@@ -1,9 +1,4 @@
-interface TextButtonProps {
-  text?: string;
-  styles?: string;
-  tooltip?: string;
-  onClick: () => void;
-}
+import type { TextButtonProps } from "../helpers/types";
 
 function TextButton({
   text = "",

@@ -1,13 +1,8 @@
 import TextButton from "./TextButton";
+import type { MacroProps } from "../helpers/types";
 
 // TODO: fix styles
 const macroStyles = "p-20 m-10 border-black";
-
-// TODO: add props for server side
-interface MacroProps {
-  title: string;
-  content: string;
-}
 
 function Macro({ title, content }: MacroProps) {
   function handleClick() {

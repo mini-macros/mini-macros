@@ -1,11 +1,4 @@
-import type { IconType } from "react-icons";
-
-interface IconButtonProps {
-  Icon: IconType;
-  styles?: string;
-  tooltip?: string;
-  onClick: () => void;
-}
+import type { IconButtonProps } from "../helpers/types";
 
 function IconButton({
   Icon,

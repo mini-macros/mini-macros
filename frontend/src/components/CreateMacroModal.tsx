@@ -1,3 +1,4 @@
+import type { CreateMacroModalProps } from "../helpers/types";
 import { useEditor } from "@tiptap/react";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
@@ -15,11 +16,6 @@ import {
   macroContentEditorStyles,
   saveBtnStyles,
 } from "../helpers/create-macro-styles";
-
-interface CreateMacroModalProps {
-  onClose: () => void;
-  isOpen: boolean;
-}
 
 function CreateMacroModal({ onClose, isOpen }: CreateMacroModalProps) {
   const editor = useEditor({
