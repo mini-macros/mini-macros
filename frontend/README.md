@@ -17,4 +17,5 @@ First TODOS:
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
 - [ ] add proper error handling to Macro CRUD operations
+- [ ] connect Macro CRUD operations to components
 - [ ] add failsafes for required data in CreateMacroModal
