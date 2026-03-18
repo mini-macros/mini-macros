@@ -3,6 +3,8 @@ import type { MacroCardProps } from "../helpers/types";
 import { macroStyles } from "../helpers/macro-styles";
 
 function MacroCard({ id, title, content }: MacroCardProps) {
+  const macroCardTooltip = "Copy Macro Content";
+
   function handleClick() {
     navigator.clipboard
       .writeText(content)
@@ -16,7 +18,7 @@ function MacroCard({ id, title, content }: MacroCardProps) {
   }
 
   return (
-    <div className={macroStyles} id={id}>
+    <div className={macroStyles} id={id} title={macroCardTooltip}>
       <TextButton onClick={handleClick} text={title} />
     </div>
   );

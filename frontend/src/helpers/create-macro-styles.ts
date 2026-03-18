@@ -4,7 +4,7 @@ export const modalStyles =
 export const headingStyles =
   "inline col-span-2 row-start-1 text-text text-2xl mb-10";
 export const closeBtnStyles =
-  "inline col-span-1 col-start-5 row-start-1 self-start place-self-end size-8 rounded-full bg-bg-light border-border shadow-md hover:bg-bg-dark";
+  "inline col-span-1 col-start-5 row-start-1 self-start place-self-end size-8 rounded-full text-text hover:bg-bg-light hover:border-border hover:shadow-md hover:bg-bg-dark";
 export const titleLabelStyles =
   "col-start-1 col-span-2 row-start-2 justify-self-start self-start text-text text-xl";
 export const inputStyles =
