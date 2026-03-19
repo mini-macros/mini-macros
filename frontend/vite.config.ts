@@ -31,6 +31,23 @@ export default defineConfig({
             }),
             instances: [{ browser: "chromium" }],
           },
+          name: "unit:bm",
+          include: ["./**/*.test.bm.{tsx, ts}"],
+          exclude: ["**/node_modules/**", "**/.git/**"],
+        },
+      },
+      {
+        test: {
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({
+              contextOptions: {
+                permissions: ["clipboard-read", "clipboard-write"],
+              },
+            }),
+            instances: [{ browser: "chromium" }],
+          },
           name: "e2e",
           include: ["./**/*.test.e2e.{tsx, ts}"],
           exclude: ["**/node_modules/**", "**/.git/**"],

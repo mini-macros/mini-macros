@@ -11,9 +11,9 @@ First TODOS:
 - [x] handle saving new macro data to localStorage
 - [x] create dark mode toggle
 - [x] create success and error components for UI
+- [x] add unit testing w/ browser mode separate from e2e tests
 - [ ] make welcome modal
 - [ ] create DropdownButton component
-- [ ] add unit testing w/ browser mode separate from e2e tests
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
 - [ ] add proper error handling to Macro CRUD operations
