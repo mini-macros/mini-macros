@@ -3,21 +3,28 @@ import type { JSONContent } from "@tiptap/react";
 
 // handle JSON compression
 export async function compressJson(json: string): Promise<string> {
-  const stream = new Blob([json], {
-    type: "application/json",
-  }).stream();
+  try {
+    const stream = new Blob([json], {
+      type: "application/json",
+    }).stream();
+    const compressedReadableStream = stream.pipeThrough(
+      new CompressionStream("gzip"),
+    );
+    const blob = await new Response(compressedReadableStream).blob();
+    const buffer = await blob.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
 
-  const compressedReadableStream = stream.pipeThrough(
-    new CompressionStream("gzip"),
-  );
+    let binary = "";
+    for (const bit of bytes) {
+      binary += String.fromCharCode(bit);
+    }
 
-  const blob = await new Response(compressedReadableStream).blob();
+    const compressedBase64 = btoa(binary);
 
-  const buffer = await blob.arrayBuffer();
-
-  const compressedBase64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-
-  return compressedBase64;
+    return compressedBase64;
+  } catch (e: unknown) {
+    throw new Error(`Unable to compress JSON data: ${e as string}`);
+  }
 }
 
 function decodeB64(b64: string): Uint8Array<ArrayBuffer> {
@@ -44,21 +51,31 @@ function macroReviver(key: string, value: unknown): unknown {
 }
 
 export async function decompressB64(b64: string): Promise<Macro> {
-  const stream = new Blob([decodeB64(b64)], {
-    type: "application/json",
-  }).stream();
+  if (!b64 || typeof b64 !== "string") {
+    throw new Error(`Expected base64 string, received ${typeof b64}`);
+  }
 
-  const decompressedReadableStream = stream.pipeThrough(
-    new DecompressionStream("gzip"),
-  );
+  try {
+    const stream = new Blob([decodeB64(b64)], {
+      type: "application/json",
+    }).stream();
 
-  const response = new Response(decompressedReadableStream);
+    const decompressedReadableStream = stream.pipeThrough(
+      new DecompressionStream("gzip"),
+    );
 
-  const blob: Blob = await response.blob();
+    const response = new Response(decompressedReadableStream);
 
-  const blobText: string = await blob.text();
+    const blob: Blob = await response.blob();
 
-  const data: Macro = JSON.parse(blobText, macroReviver) as Macro;
+    const blobText: string = await blob.text();
 
-  return data;
+    if (!blobText) throw new Error("Decompressed text is empty");
+
+    const data: Macro = JSON.parse(blobText, macroReviver) as Macro;
+
+    return data;
+  } catch (e: unknown) {
+    throw new Error(`Unable to decompress base64 string: ${e as string}`);
+  }
 }

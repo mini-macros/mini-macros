@@ -138,7 +138,7 @@ export function deleteMacroById(id: string): boolean {
       return true;
     }
     return false;
-  } catch {
-    return false;
+  } catch (e: unknown) {
+    throw new Error(`Unable to delete macro with id, ${id}: ${e as string}`);
   }
 }
