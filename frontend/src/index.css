@@ -16,6 +16,15 @@
 
   /* font */
   --font-mono: "DM Mono", monospace;
+
+  /* toast colors */
+  --color-error-bg: hsl(1, 79%, 45%, 0.75);
+  --color-error-border: hsl(1, 79%, 45%);
+  --color-success-bg: hsl(140, 90%, 45%, 0.75);
+  --color-success-border: hsl(140, 90%, 45%);
+  --color-neutral-bg: hsl(225, 72%, 53%, 0.75);
+  --color-neutral-border: hsl(225, 72%, 53%);
+  --color-toast-text: hsl(0, 0%, 95%);
 }
 
 body {

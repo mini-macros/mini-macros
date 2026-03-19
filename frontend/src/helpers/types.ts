@@ -14,11 +14,13 @@ export interface MacroCardProps {
   id: string;
   title: string;
   content: string;
+  showToast: (msg: string, type: ToastState) => void;
 }
 
 export interface CreateMacroModalProps {
   onClose: () => void;
   isOpen: boolean;
+  showToast: (msg: string, type: ToastState) => void;
 }
 
 export interface MacroContentEditorProps {
@@ -38,4 +40,14 @@ export interface TextButtonProps {
   styles?: string;
   tooltip?: string;
   onClick: () => void;
+}
+
+export interface ToastProps {
+  type?: string;
+  msg: string;
+}
+
+export enum ToastState {
+  ERROR = "ERROR",
+  SUCCESS = "SUCCESS",
 }

@@ -1,19 +1,19 @@
 import TextButton from "./TextButton";
-import type { MacroCardProps } from "../helpers/types";
+import { type MacroCardProps, ToastState } from "../helpers/types";
 import { macroStyles } from "../helpers/macro-styles";
 
-function MacroCard({ id, title, content }: MacroCardProps) {
+function MacroCard({ id, title, content, showToast }: MacroCardProps) {
   const macroCardTooltip = "Copy Macro Content";
 
   function handleClick() {
     navigator.clipboard
       .writeText(content)
       .then(() => {
-        // TODO: add success/fail component for UI
-        console.log("Copied successfully!");
+        showToast("Macro content copied!", ToastState.SUCCESS);
       })
       .catch((err) => {
-        console.log("Failed to copy", err);
+        showToast("Something went wrong. Please try again.", ToastState.ERROR);
+        console.log(err);
       });
   }
 

@@ -1,4 +1,4 @@
-import type { CreateMacroModalProps } from "../helpers/types";
+import { type CreateMacroModalProps, ToastState } from "../helpers/types";
 import { useEditor } from "@tiptap/react";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
@@ -17,16 +17,21 @@ import {
   saveBtnStyles,
 } from "../helpers/create-macro-styles";
 
-function CreateMacroModal({ onClose, isOpen }: CreateMacroModalProps) {
+function CreateMacroModal({
+  onClose,
+  isOpen,
+  showToast,
+}: CreateMacroModalProps) {
   const editor = useEditor({
     extensions: [TextStyleKit, StarterKit],
   });
+  // TODO: set up reducer for ensuring all fields have been filled
 
   if (!isOpen) return null;
 
   function onSave() {
-    const content = editor.getJSON();
-    console.log(`save: ${JSON.stringify(content)}`);
+    // TODO: add save behavior here
+    showToast("Macro Saved Successfully!", ToastState.SUCCESS);
     onClose();
   }
 
