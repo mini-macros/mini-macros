@@ -75,20 +75,18 @@ export function addIndex(id: string): boolean {
 }
 
 export async function createMacro(
-  id: string,
-  title: string,
-  content: string,
+  macro: Pick<Macro, "id" | "title" | "content">,
 ): Promise<boolean> {
   try {
-    const macro: Macro = {
-      id: id,
-      title: title,
-      content: content,
+    const newMacro: Macro = {
+      id: macro.id,
+      title: macro.title,
+      content: macro.content,
       clickCount: 0,
       createdAt: new Date(Date.now()),
       updatedAt: new Date(Date.now()),
     };
-    const macroJson = JSON.stringify(macro);
+    const macroJson = JSON.stringify(newMacro);
 
     const compressedMacro = await compressJson(macroJson);
     if (!approvedMacroSize(compressedMacro)) return false;
@@ -108,12 +106,11 @@ export async function createMacro(
 
 export async function updateMacroById(
   id: string,
-  title: string,
-  content: string,
+  updates: Partial<Macro>,
 ): Promise<boolean> {
   try {
     const prevMacro = await getMacroById(id);
-    const updatedMacro = { ...prevMacro, title: title, content: content };
+    const updatedMacro = { ...prevMacro, ...updates };
 
     const updatedJson = JSON.stringify(updatedMacro);
 

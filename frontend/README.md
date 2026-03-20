@@ -14,6 +14,7 @@ First TODOS:
 - [x] add unit testing w/ browser mode separate from e2e tests
 - [x] add proper error handling to Macro CRUD operations
 - [x] write integration tests for CRUD operations and compression
+- [x] add ts utility types to Macro CRUD operations (when backend api is enabled)
 - [ ] create SearchBar component and add to App
 - [ ] make welcome modal
 - [ ] create DropdownButton component
