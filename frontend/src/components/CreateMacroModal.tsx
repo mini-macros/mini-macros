@@ -32,6 +32,8 @@ function CreateMacroModal({
   function onSave() {
     // TODO: add save behavior here
     showToast("Macro Saved Successfully!", ToastState.SUCCESS);
+    // NOTE: uncomment for debugging only
+    // console.log(`${JSON.stringify(editor.getJSON())}`);
     onClose();
   }
 

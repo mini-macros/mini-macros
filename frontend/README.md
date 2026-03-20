@@ -13,10 +13,12 @@ First TODOS:
 - [x] create success and error components for UI
 - [x] add unit testing w/ browser mode separate from e2e tests
 - [x] add proper error handling to Macro CRUD operations
+- [x] write integration tests for CRUD operations and compression
+- [ ] create SearchBar component and add to App
 - [ ] make welcome modal
 - [ ] create DropdownButton component
+- [ ] create menu for other pages (later)
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
-- [ ] write unit tests for CRUD operations and compression
 - [ ] connect Macro CRUD operations to components
 - [ ] add failsafes for required data in CreateMacroModal

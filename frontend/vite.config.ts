@@ -9,13 +9,14 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    reporters: [["verbose", { summary: false }]],
     projects: [
       {
         test: {
           environment: "jsdom",
           globals: true,
           name: "unit",
-          include: ["./**/*.test.{tsx, ts}"],
+          include: ["./**/*.test.tsx", "./**/*.test.ts"],
           exclude: ["**/node_modules/**", "**/.git/**"],
         },
       },
@@ -32,7 +33,7 @@ export default defineConfig({
             instances: [{ browser: "chromium" }],
           },
           name: "integration",
-          include: ["./**/*.test.int.{tsx, ts}"],
+          include: ["./**/*.test.int.tsx", "./**/*.test.int.ts"],
           exclude: ["**/node_modules/**", "**/.git/**"],
         },
       },
@@ -49,7 +50,7 @@ export default defineConfig({
             instances: [{ browser: "chromium" }],
           },
           name: "e2e",
-          include: ["./**/*.test.e2e.{tsx, ts}"],
+          include: ["./**/*.test.e2e.tsx", "./**/*.test.e2e.ts"],
           exclude: ["**/node_modules/**", "**/.git/**"],
         },
       },

@@ -39,7 +39,11 @@ function decodeB64(b64: string): Uint8Array<ArrayBuffer> {
 
 function macroReviver(key: string, value: unknown): unknown {
   if (key === "createdAt" || key === "updatedAt") {
-    return new Date(value as string);
+    const date = new Date(value as string);
+    if (isNaN(date.getTime())) {
+      throw new Error(`Invalid date for Macro type key: ${key}`);
+    }
+    return date;
   }
   if (key === "clickCount") {
     return value as number;

@@ -1,10 +1,9 @@
 import type { Macro } from "./types";
-import type { JSONContent } from "@tiptap/react";
 import { compressJson, decompressB64 } from "./compress";
 
-const INDEX_KEY = "macros:id";
+export const INDEX_KEY = "macros:id";
 const MACRO_SIZE_LIMIT = 250 * 1024; // 250 KB
-const MACRO_COUNT_LIMIT = 35;
+export const MACRO_COUNT_LIMIT = 35;
 
 // handle size and count verification
 function approvedMacroSize(data: string): boolean {
@@ -20,7 +19,7 @@ function approvedMacroCount(): boolean {
 }
 
 // handle read operations
-function getMacroIndexes(): string[] {
+export function getMacroIndexes(): string[] {
   try {
     const indexes = localStorage.getItem(INDEX_KEY);
     return indexes ? indexes.split(",") : [];
@@ -61,7 +60,7 @@ export async function getMacroByTitle(title: string): Promise<Macro | null> {
 }
 
 // handle create and update operations
-function addIndex(id: string): boolean {
+export function addIndex(id: string): boolean {
   try {
     const indexes = getMacroIndexes();
     if (indexes.includes(id)) return true;
@@ -76,12 +75,13 @@ function addIndex(id: string): boolean {
 }
 
 export async function createMacro(
+  id: string,
   title: string,
-  content: JSONContent,
+  content: string,
 ): Promise<boolean> {
   try {
     const macro: Macro = {
-      id: crypto.randomUUID(),
+      id: id,
       title: title,
       content: content,
       clickCount: 0,
@@ -109,7 +109,7 @@ export async function createMacro(
 export async function updateMacroById(
   id: string,
   title: string,
-  content: JSONContent,
+  content: string,
 ): Promise<boolean> {
   try {
     const prevMacro = await getMacroById(id);

@@ -1,10 +1,10 @@
-import { Editor, type JSONContent } from "@tiptap/core";
+import { Editor } from "@tiptap/core";
 import type { IconType } from "react-icons";
 
 export interface Macro {
   id: string;
   title: string;
-  content: JSONContent;
+  content: string;
   clickCount: number;
   createdAt: Date;
   updatedAt: Date;
