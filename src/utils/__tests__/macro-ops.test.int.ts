@@ -1,6 +1,7 @@
 import { expect, test, beforeEach } from "vitest";
-import type { Macro } from "../types";
-import * as ops from "../macro-ops";
+import type { Macro } from "../../types/types";
+import { AppError } from "../../types/errors";
+import * as ops from "../macro-crud";
 
 beforeEach(() => localStorage.clear());
 
@@ -13,7 +14,7 @@ test("createMacro adds indexes to localStorage, getMacroIndexes retrieves them",
         title: macro.title,
         content: macro.content,
       }),
-    );
+    ).toBeNull();
     macrosMockIndexes = [...macrosMockIndexes, macro.id];
   }
 
@@ -28,10 +29,10 @@ test("createMacro adds macro data, getMacros retrieves it in a list", async () =
       title: macrosMock[0].title,
       content: macrosMock[0].content,
     }),
-  );
+  ).toBeNull();
   const retrievedMacros = await ops.getMacros();
 
-  expect(retrievedMacros.length == 1);
+  expect(retrievedMacros.length).toEqual(1);
   expect(retrievedMacros[0].title).toEqual(macrosMock[0].title);
   expect(retrievedMacros[0].content).toEqual(macrosMock[0].content);
 });
@@ -44,7 +45,7 @@ test("createMacro adds macros to localStorage, getMacroById retrieves specific m
         title: macro.title,
         content: macro.content,
       }),
-    );
+    ).toBeNull();
   }
   const retrievedMacro: Macro | null = await ops.getMacroById(macrosMock[0].id);
 
@@ -61,7 +62,7 @@ test("createMacro adds macro data to localStorage, updateMacroById updates it", 
       title: macrosMock[0].title,
       content: macrosMock[0].content,
     }),
-  );
+  ).toBeNull();
   const oldMacroMockData: string | null = localStorage.getItem(
     `macro:${macrosMock[0].id}`,
   );
@@ -73,7 +74,7 @@ test("createMacro adds macro data to localStorage, updateMacroById updates it", 
       content: macrosMock[1].content,
       updatedAt: new Date(Date.now()),
     }),
-  );
+  ).toBeNull();
   const newMacroMockData: string | null = localStorage.getItem(
     `macro:${macrosMock[0].id}`,
   );
@@ -89,14 +90,14 @@ test("createMacro adds macro data to localStorage, deleteMacroById removes it", 
       title: macrosMock[0].title,
       content: macrosMock[0].content,
     }),
-  );
+  ).toBeNull();
   const macroMockData: string | null = localStorage.getItem(
     `macro:${macrosMock[0].id}`,
   );
 
   expect(macroMockData).not.toBeNull();
 
-  expect(ops.deleteMacroById(macrosMock[0].id));
+  expect(ops.deleteMacroById(macrosMock[0].id)).toBeNull();
   const afterDelMacroMockData: string | null = localStorage.getItem(
     `macro:${macrosMock[0].id}`,
   );
@@ -111,7 +112,7 @@ test("createMacro adds macros to localStorage, getMacroByTitle retrieves specifi
         title: macro.title,
         content: macro.content,
       }),
-    );
+    ).toBeNull();
   }
 
   const retrievedMacro: Macro | null = await ops.getMacroByTitle(
@@ -135,7 +136,7 @@ test("createMacro doesn't add macros that are too large", async () => {
     title: macrosMock[0].title,
     content: randomContent,
   });
-  expect(creationResult).toBe(false);
+  expect(creationResult).toBeInstanceOf(AppError);
 });
 
 test("createMacro doesn't add macros if there are already too many", async () => {
@@ -148,7 +149,7 @@ test("createMacro doesn't add macros if there are already too many", async () =>
     title: macrosMock[0].title,
     content: macrosMock[0].content,
   });
-  expect(creationResult).toBe(false);
+  expect(creationResult).toBeInstanceOf(AppError);
 });
 
 const macrosMock: Macro[] = [

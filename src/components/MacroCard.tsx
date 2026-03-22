@@ -1,6 +1,6 @@
 import TextButton from "./TextButton";
-import { type MacroCardProps, ToastState } from "../helpers/types";
-import { macroStyles } from "../helpers/macro-styles";
+import { type MacroCardProps, ToastState } from "../types/props";
+import { macroStyles } from "../styles/macro-styles";
 
 function MacroCard({ id, title, content, showToast }: MacroCardProps) {
   const macroCardTooltip = "Copy Macro Content";

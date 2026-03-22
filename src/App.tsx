@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreateMacroModal from "./components/CreateMacroModal";
 import MacroCard from "./components/MacroCard";
 import Toast from "./components/Toast";
-import { ToastState } from "./helpers/types";
+import { ToastState } from "./types/props";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
@@ -11,7 +11,7 @@ import {
   navStyles,
   createMacroBtnStyles,
   darkModeToggleBtnStyles,
-} from "./helpers/app-styles";
+} from "./styles/app-styles";
 
 const testString =
   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";

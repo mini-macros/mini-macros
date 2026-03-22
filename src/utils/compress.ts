@@ -1,4 +1,4 @@
-import type { Macro } from "./types";
+import type { Macro } from "../types/types";
 import type { JSONContent } from "@tiptap/react";
 
 // handle JSON compression

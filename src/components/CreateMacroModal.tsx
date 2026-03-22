@@ -1,4 +1,4 @@
-import { type CreateMacroModalProps, ToastState } from "../helpers/types";
+import { type CreateMacroModalProps, ToastState } from "../types/props";
 import { useEditor } from "@tiptap/react";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
@@ -15,7 +15,7 @@ import {
   contentLabelStyles,
   macroContentEditorStyles,
   saveBtnStyles,
-} from "../helpers/create-macro-styles";
+} from "../styles/create-macro-styles";
 
 function CreateMacroModal({
   onClose,

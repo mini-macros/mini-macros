@@ -1,6 +1,6 @@
 import { EditorContent } from "@tiptap/react";
 import { Editor } from "@tiptap/core";
-import type { MacroContentEditorProps } from "../helpers/types";
+import type { MacroContentEditorProps } from "../types/types";
 
 const formatEditor =
   "[&_.ProseMirror]:h-full [&_.ProseMirror]:w-full h-full w-full [&_.ProseMirror]:outline-none";

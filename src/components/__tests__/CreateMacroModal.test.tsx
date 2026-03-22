@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { expect, test, vi } from "vitest";
 import CreateMacroModal from "../CreateMacroModal";
 import Toast from "../Toast";
-import { ToastState } from "../../helpers/types";
+import { ToastState } from "../../types/props";
 
 const onCloseMock = vi.fn();
 const showToastMock = vi.fn((type: ToastState, msg: string) => {

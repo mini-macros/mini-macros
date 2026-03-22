@@ -1,15 +1,6 @@
 import { Editor } from "@tiptap/core";
 import type { IconType } from "react-icons";
 
-export interface Macro {
-  id: string;
-  title: string;
-  content: string;
-  clickCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface MacroCardProps {
   id: string;
   title: string;

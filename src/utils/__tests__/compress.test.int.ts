@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import type { Macro } from "../types";
+import type { Macro } from "../../types/types";
 import { compressJson, decompressB64 } from "../compress";
 
 const macroMock: Macro = {

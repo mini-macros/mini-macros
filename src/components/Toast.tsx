@@ -1,5 +1,5 @@
-import { type ToastProps, ToastState } from "../helpers/types";
-import * as styles from "../helpers/toast-styles";
+import { type ToastProps, ToastState } from "../types/props";
+import * as styles from "../styles/toast-styles";
 
 function Toast({ type, msg }: ToastProps) {
   let toastStyles = styles.baseToastStyles;

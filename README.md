@@ -19,6 +19,7 @@ First TODOS:
 - [ ] make welcome modal
 - [ ] create DropdownButton component
 - [ ] create menu for other pages (later)
+- [ ] create test for Toast
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
 - [ ] connect Macro CRUD operations to components

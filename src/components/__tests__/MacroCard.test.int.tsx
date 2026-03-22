@@ -3,7 +3,7 @@ import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import MacroCard from "../MacroCard";
 import Toast from "../Toast";
-import { ToastState } from "../../helpers/types";
+import { ToastState } from "../../types/props";
 
 const showToastMock = vi.fn((type: ToastState, msg: string) => {
   const COUNTDOWN_IN_MS = 4 * 1000;

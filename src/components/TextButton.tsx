@@ -1,4 +1,4 @@
-import type { TextButtonProps } from "../helpers/types";
+import type { TextButtonProps } from "../types/types";
 
 function TextButton({
   text = "",
