@@ -34,11 +34,12 @@ export interface TextButtonProps {
 }
 
 export interface ToastProps {
-  type?: string;
+  type?: ToastState;
   msg: string;
 }
 
 export enum ToastState {
   ERROR = "ERROR",
   SUCCESS = "SUCCESS",
+  WARNING = "WARNING",
 }

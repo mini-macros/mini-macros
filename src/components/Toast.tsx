@@ -11,6 +11,9 @@ function Toast({ type, msg }: ToastProps) {
     case ToastState.SUCCESS:
       toastStyles += " " + styles.successToastStyles;
       break;
+    case ToastState.WARNING:
+      toastStyles += " " + styles.warningToastStyles;
+      break;
     default:
       toastStyles += " " + styles.neutralToastStyles;
   }
