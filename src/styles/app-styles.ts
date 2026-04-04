@@ -5,4 +5,5 @@ export const createMacroBtnStyles =
   "rounded-full size-12 p-2 m-1 ml-2  text-text hover:bg-bg hover:bg-bg-light hover:border-border hover:shadow-md";
 export const darkModeToggleBtnStyles =
   "self-center rounded-full size-12 p-2 m-1 text-text hover:border-border hover:bg-bg-light hover:shadow-md";
-export const macroSectionStyles = "";
+export const macroSectionStyles =
+  "grid grid-cols-[repeat(auto-fill,minmax(16rem,16rem))] gap-10 p-10 justify-center";

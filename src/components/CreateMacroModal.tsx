@@ -10,12 +10,13 @@ import TextButton from "./TextButton";
 import MacroContentEditor from "./MacroContentEditor";
 import { IoClose } from "react-icons/io5";
 import * as styles from "../styles/create-macro-styles";
-import { createMacro } from "../utils/macro-crud";
+import { createMacro, getMacroById } from "../utils/macro-crud";
 
 function CreateMacroModal({
   onClose,
   isOpen,
   showToast,
+  onMacroCreated,
 }: CreateMacroModalProps) {
   const editor = useEditor({
     extensions: [TextStyleKit, StarterKit],
@@ -26,9 +27,7 @@ function CreateMacroModal({
   if (!isOpen) return null;
 
   const onSave = async () => {
-    console.log("save clicked");
     if (!editor) {
-      console.log("editor is null");
       return;
     }
     const newMacro: Pick<Macro, "id" | "title" | "content"> = {
@@ -50,11 +49,19 @@ function CreateMacroModal({
           showToast("Something went terribly wrong here.", ToastState.ERROR);
           break;
       }
+      editor.destroy();
+      return;
+    }
+    const resultMacro: Macro | null = await getMacroById(newMacro.id);
+    if (!resultMacro) {
+      showToast("Macro could not be saved", ToastState.ERROR);
+      editor.destroy();
       return;
     }
 
+    onMacroCreated(resultMacro);
     showToast("Macro Saved Successfully!", ToastState.SUCCESS);
-    // console.log(`${JSON.stringify(editor.getJSON())}`);
+    editor.destroy();
     onClose();
   };
 

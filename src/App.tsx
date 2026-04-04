@@ -9,12 +9,7 @@ import { getMacros } from "./utils/macro-crud";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
-import {
-  baseStyles,
-  navStyles,
-  createMacroBtnStyles,
-  darkModeToggleBtnStyles,
-} from "./styles/app-styles";
+import * as styles from "./styles/app-styles";
 
 function App() {
   const [createMacroModalVisiblity, setCreateMacroModalVisibility] =
@@ -31,7 +26,6 @@ function App() {
   const onCreateMacroBtnClick = () => setCreateMacroModalVisibility(true);
   const onCreateMacroClose = () => {
     setCreateMacroModalVisibility(false);
-    window.location.reload();
   };
 
   const toggleTheme = () => {
@@ -78,8 +72,8 @@ function App() {
   // TODO: add search bar
   // TODO: add menu button/dropdown
   return (
-    <div className={baseStyles}>
-      <nav className={navStyles}>
+    <div className={styles.baseStyles}>
+      <nav className={styles.navStyles}>
         <CreateMacroButton onClick={onCreateMacroBtnClick} />
         <SearchBar text={search} onChange={searchOnChange} />
         <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
@@ -88,8 +82,9 @@ function App() {
         onClose={onCreateMacroClose}
         isOpen={createMacroModalVisiblity}
         showToast={showToastCallback}
+        onMacroCreated={(macro: Macro) => setMacros((prev) => [...prev, macro])}
       />
-      <section>
+      <section className={styles.macroSectionStyles}>
         {filteredMacros.map((macro) => (
           <MacroCard
             key={macro.id}
@@ -109,7 +104,7 @@ function CreateMacroButton({ onClick }: { onClick: () => void }) {
 
   return (
     <IconButton
-      styles={createMacroBtnStyles}
+      styles={styles.createMacroBtnStyles}
       Icon={FaPlus}
       tooltip={createMacroBtnTooltip}
       onClick={onClick}
@@ -128,7 +123,7 @@ function DarkModeToggleButton({
 
   return (
     <IconButton
-      styles={darkModeToggleBtnStyles}
+      styles={styles.darkModeToggleBtnStyles}
       Icon={isDark ? IoSunnyOutline : IoMoonOutline}
       tooltip={darkModeToggleTooltip}
       onClick={onClick}

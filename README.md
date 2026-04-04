@@ -17,8 +17,11 @@ First TODOS:
 - [x] add ts utility types to Macro CRUD operations (when backend api is enabled)
 - [x] create test for Toast
 - [x] create SearchBar component and add to App
+- [x] make macros aligned in grid
 - [ ] make welcome modal
 - [ ] create DropdownButton component
+- [ ] add DropdownButton "inside" MacroCard visually
+- [ ] setup macro editing and deletion
 - [ ] create menu for other pages (later)
 - [ ] create backend server
 - [ ] style and finish FixedMenu for MacroContentEditor component
