@@ -1,4 +1,4 @@
-import type { IconButtonProps } from "../types/types";
+import type { IconButtonProps } from "../types/props";
 
 function IconButton({
   Icon,

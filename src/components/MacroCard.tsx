@@ -2,10 +2,12 @@ import TextButton from "./TextButton";
 import { type MacroCardProps, ToastState } from "../types/props";
 import { macroStyles } from "../styles/macro-styles";
 
-function MacroCard({ id, title, content, showToast }: MacroCardProps) {
+function MacroCard({ title, content, showToast }: MacroCardProps) {
   const macroCardTooltip = "Copy Macro Content";
 
   function handleClick() {
+    console.log("Macro clicked!");
+    console.log("Macro Content: ", content);
     navigator.clipboard
       .writeText(content)
       .then(() => {
@@ -18,9 +20,12 @@ function MacroCard({ id, title, content, showToast }: MacroCardProps) {
   }
 
   return (
-    <div className={macroStyles} id={id} title={macroCardTooltip}>
-      <TextButton onClick={handleClick} text={title} />
-    </div>
+    <TextButton
+      styles={macroStyles}
+      tooltip={macroCardTooltip}
+      onClick={handleClick}
+      text={title}
+    />
   );
 }
 

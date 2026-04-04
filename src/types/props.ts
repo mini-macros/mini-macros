@@ -2,7 +2,6 @@ import { Editor } from "@tiptap/core";
 import type { IconType } from "react-icons";
 
 export interface MacroCardProps {
-  id: string;
   title: string;
   content: string;
   showToast: (msg: string, type: ToastState) => void;
@@ -42,4 +41,9 @@ export enum ToastState {
   ERROR = "ERROR",
   SUCCESS = "SUCCESS",
   WARNING = "WARNING",
+}
+
+export interface SearchBarProps {
+  text: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
 }

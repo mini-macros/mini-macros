@@ -20,7 +20,7 @@ test("copies macro content to clipboard", async () => {
 
   await render(
     <MacroCard
-      id={crypto.randomUUID()}
+      key={crypto.randomUUID()}
       title={titleMock}
       content={contentMock}
       showToast={() => showToastMock(ToastState.SUCCESS, successMsg)}

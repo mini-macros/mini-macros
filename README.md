@@ -16,11 +16,11 @@ First TODOS:
 - [x] write integration tests for CRUD operations and compression
 - [x] add ts utility types to Macro CRUD operations (when backend api is enabled)
 - [x] create test for Toast
-- [ ] create SearchBar component and add to App
+- [x] create SearchBar component and add to App
 - [ ] make welcome modal
 - [ ] create DropdownButton component
 - [ ] create menu for other pages (later)
-- [ ] create backend server for main directory
+- [ ] create backend server
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
 - [ ] connect Macro CRUD operations to components

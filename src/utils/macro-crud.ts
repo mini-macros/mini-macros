@@ -12,7 +12,7 @@ const unknownErr: MacroError = {
 };
 
 // handle size and count verification
-function approvedMacroSize(data: string): Error | null {
+function approvedMacroSize(data: string): AppError<MacroErrorCode> | null {
   const dataSize = new Blob([data]).size;
   if (dataSize > MACRO_SIZE_LIMIT) {
     const err: MacroError = {
@@ -25,7 +25,7 @@ function approvedMacroSize(data: string): Error | null {
   return null;
 }
 
-function approvedMacroCount(): Error | null {
+function approvedMacroCount(): AppError<MacroErrorCode> | null {
   const indexes = getMacroIndexes();
   if (indexes.length >= MACRO_COUNT_LIMIT) {
     const err: MacroError = {
@@ -80,7 +80,7 @@ export async function getMacroByTitle(title: string): Promise<Macro | null> {
 }
 
 // handle create and update operations
-export function addIndex(id: string): Error | null {
+export function addIndex(id: string): AppError<MacroErrorCode> | null {
   try {
     const indexes = getMacroIndexes();
     if (indexes.includes(id)) return null;
@@ -90,13 +90,16 @@ export function addIndex(id: string): Error | null {
 
     return null;
   } catch (e: unknown) {
-    return new AppError({ ...unknownErr, cause: e as string });
+    return new AppError({
+      ...unknownErr,
+      cause: e instanceof Error ? e.message : String(e),
+    });
   }
 }
 
 export async function createMacro(
   macro: Pick<Macro, "id" | "title" | "content">,
-): Promise<Error | null> {
+): Promise<AppError<MacroErrorCode> | null> {
   try {
     const newMacro: Macro = {
       id: macro.id,
@@ -129,14 +132,17 @@ export async function createMacro(
 
     return null;
   } catch (e: unknown) {
-    return new AppError({ ...unknownErr, cause: e as string });
+    return new AppError({
+      ...unknownErr,
+      cause: e instanceof Error ? e.message : String(e),
+    });
   }
 }
 
 export async function updateMacroById(
   id: string,
   updates: Partial<Macro>,
-): Promise<Error | null> {
+): Promise<AppError<MacroErrorCode> | null> {
   try {
     const prevMacro = await getMacroById(id);
     const updatedMacro = { ...prevMacro, ...updates };
@@ -151,12 +157,15 @@ export async function updateMacroById(
     localStorage.setItem(`macro:${id}`, compressedMacro);
     return null;
   } catch (e: unknown) {
-    return new AppError({ ...unknownErr, cause: e as string });
+    return new AppError({
+      ...unknownErr,
+      cause: e instanceof Error ? e.message : String(e),
+    });
   }
 }
 
 // handle delete operations
-export function deleteMacroById(id: string): Error | null {
+export function deleteMacroById(id: string): AppError<MacroErrorCode> | null {
   try {
     const indexes = getMacroIndexes();
     if (!indexes.includes(id)) {
@@ -174,6 +183,9 @@ export function deleteMacroById(id: string): Error | null {
 
     return null;
   } catch (e: unknown) {
-    return new AppError({ ...unknownErr, cause: e as string });
+    return new AppError({
+      ...unknownErr,
+      cause: e instanceof Error ? e.message : String(e),
+    });
   }
 }

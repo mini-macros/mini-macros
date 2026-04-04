@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import CreateMacroModal from "./components/CreateMacroModal";
 import MacroCard from "./components/MacroCard";
 import Toast from "./components/Toast";
+import SearchBar from "./components/SearchBar";
 import { ToastState } from "./types/props";
+import type { Macro } from "./types/types";
+import { getMacros } from "./utils/macro-crud";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
@@ -13,21 +16,23 @@ import {
   darkModeToggleBtnStyles,
 } from "./styles/app-styles";
 
-const testString =
-  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
 function App() {
   const [createMacroModalVisiblity, setCreateMacroModalVisibility] =
     useState(false);
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark",
   );
+  const [macros, setMacros] = useState<Macro[]>([]);
   const [toast, setToast] = useState<{ msg: string; type: ToastState } | null>(
     null,
   );
+  const [search, setSearch] = useState("");
 
   const onCreateMacroBtnClick = () => setCreateMacroModalVisibility(true);
-  const onCreateMacroClose = () => setCreateMacroModalVisibility(false);
+  const onCreateMacroClose = () => {
+    setCreateMacroModalVisibility(false);
+    window.location.reload();
+  };
 
   const toggleTheme = () => {
     const nextTheme = !isDark;
@@ -45,12 +50,38 @@ function App() {
   const showToastCallback = (msg: string, type: ToastState) =>
     showToast(msg, type);
 
+  useEffect(() => {
+    async function fetchMacros() {
+      try {
+        const macroList = await getMacros();
+        setMacros(macroList);
+      } catch (err) {
+        showToast(
+          "Macros could not be retreived. Please refresh the page.",
+          ToastState.ERROR,
+        );
+        console.log(err);
+      }
+    }
+    void fetchMacros();
+  }, [setMacros]);
+
+  const filteredMacros = useMemo(() => {
+    return macros.filter((macro) =>
+      macro.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [macros, search]);
+
+  const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
+
   // TODO: add search bar
   // TODO: add menu button/dropdown
   return (
     <div className={baseStyles}>
       <nav className={navStyles}>
         <CreateMacroButton onClick={onCreateMacroBtnClick} />
+        <SearchBar text={search} onChange={searchOnChange} />
         <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
       </nav>
       <CreateMacroModal
@@ -59,12 +90,14 @@ function App() {
         showToast={showToastCallback}
       />
       <section>
-        <MacroCard
-          id={crypto.randomUUID()}
-          title={testString}
-          content="content"
-          showToast={showToastCallback}
-        />
+        {filteredMacros.map((macro) => (
+          <MacroCard
+            key={macro.id}
+            title={macro.title}
+            content={macro.content}
+            showToast={showToastCallback}
+          />
+        ))}
       </section>
       {toast && <Toast type={toast.type} msg={toast.msg} />}
     </div>
