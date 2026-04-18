@@ -18,13 +18,16 @@ First TODOS:
 - [x] create test for Toast
 - [x] create SearchBar component and add to App
 - [x] make macros aligned in grid
+- [x] create DropdownButton component
+- [x] setup macro editing and deletion
+- [x] connect Macro CRUD operations to components
+- [x] populate editor with existing data when editing macro
+- [ ] add export macros to JSON
+- [ ] add import macros from JSON
 - [ ] make welcome modal
-- [ ] create DropdownButton component
 - [ ] add DropdownButton "inside" MacroCard visually
-- [ ] setup macro editing and deletion
-- [ ] create menu for other pages (later)
+- [ ] create menu for other pages
 - [ ] create backend server
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
-- [ ] connect Macro CRUD operations to components
 - [ ] add failsafes for required data in CreateMacroModal

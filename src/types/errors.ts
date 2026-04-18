@@ -12,8 +12,10 @@ export interface AppErrorParams<T> {
   cause: string;
 }
 
-export interface MacroError extends AppErrorParams<MacroErrorCode> {
+export interface MacroError {
   code: MacroErrorCode;
+  msg: string;
+  cause: string;
 }
 
 export enum MacroErrorCode {

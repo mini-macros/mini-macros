@@ -8,16 +8,29 @@ export interface MacroCardProps {
   showToast: (msg: string, type: ToastState) => void;
 }
 
-export interface CreateMacroModalProps {
+export interface MacroModalProps {
+  modalTitle: string;
   onClose: () => void;
-  isOpen: boolean;
+  isCreate: boolean;
+  macro?: Macro;
   showToast: (msg: string, type: ToastState) => void;
-  onMacroCreated: (macro: Macro) => void;
+  onMacroChange: (macro: Macro) => void;
 }
 
 export interface MacroContentEditorProps {
   styles?: string;
   editor: Editor;
+}
+
+export interface MacroSaveProps {
+  editor: Editor;
+  title: string;
+  macro?: Macro;
+  showToast: (msg: string, type: ToastState) => void;
+}
+
+export interface DropdownButtonProps extends React.PropsWithChildren {
+  Icon: IconType;
 }
 
 export interface IconButtonProps {

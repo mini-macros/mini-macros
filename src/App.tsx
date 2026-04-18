@@ -1,19 +1,24 @@
 import { useEffect, useState, useMemo } from "react";
-import CreateMacroModal from "./components/CreateMacroModal";
+import MacroModal from "./components/MacroModal";
 import MacroCard from "./components/MacroCard";
 import Toast from "./components/Toast";
 import SearchBar from "./components/SearchBar";
+import DropdownButton from "./components/DropdownButton";
+import TextButton from "./components/TextButton";
 import { ToastState } from "./types/props";
 import type { Macro } from "./types/types";
 import { getMacros } from "./utils/macro-crud";
+import { handleCopy, handleDelete } from "./utils/macro-handlers";
 import IconButton from "./components/IconButton";
 import { FaPlus } from "react-icons/fa";
+import { FaEllipsis } from "react-icons/fa6";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
 import * as styles from "./styles/app-styles";
 
 function App() {
-  const [createMacroModalVisiblity, setCreateMacroModalVisibility] =
-    useState(false);
+  const [createMacroModalShow, setCreateMacroModalShow] = useState(false);
+  const [editMacroModalShow, setEditMacroModalShow] = useState(false);
+  const [selectedMacro, setSelectedMacro] = useState<Macro | null>(null);
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark",
   );
@@ -23,9 +28,18 @@ function App() {
   );
   const [search, setSearch] = useState("");
 
-  const onCreateMacroBtnClick = () => setCreateMacroModalVisibility(true);
+  const onCreateMacroBtnClick = () => setCreateMacroModalShow(true);
   const onCreateMacroClose = () => {
-    setCreateMacroModalVisibility(false);
+    setCreateMacroModalShow(false);
+  };
+
+  const onEditMacroBtnClick = (macro: Macro) => {
+    setSelectedMacro(macro);
+    setEditMacroModalShow(true);
+  };
+  const onEditMacroClose = () => {
+    setSelectedMacro(null);
+    setEditMacroModalShow(false);
   };
 
   const toggleTheme = () => {
@@ -58,7 +72,7 @@ function App() {
       }
     }
     void fetchMacros();
-  }, [setMacros]);
+  }, []);
 
   const filteredMacros = useMemo(() => {
     return macros.filter((macro) =>
@@ -69,7 +83,6 @@ function App() {
   const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
 
-  // TODO: add search bar
   // TODO: add menu button/dropdown
   return (
     <div className={styles.baseStyles}>
@@ -78,20 +91,63 @@ function App() {
         <SearchBar text={search} onChange={searchOnChange} />
         <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
       </nav>
-      <CreateMacroModal
-        onClose={onCreateMacroClose}
-        isOpen={createMacroModalVisiblity}
-        showToast={showToastCallback}
-        onMacroCreated={(macro: Macro) => setMacros((prev) => [...prev, macro])}
-      />
+      {createMacroModalShow && (
+        <MacroModal
+          modalTitle="Create New Macro"
+          onClose={onCreateMacroClose}
+          isCreate={true}
+          showToast={showToastCallback}
+          onMacroChange={(macro: Macro) =>
+            setMacros((prev) => [...prev, macro])
+          }
+        />
+      )}
+      {editMacroModalShow && selectedMacro && (
+        <MacroModal
+          modalTitle="Edit Macro"
+          onClose={onEditMacroClose}
+          isCreate={false}
+          showToast={showToastCallback}
+          macro={selectedMacro}
+          onMacroChange={(macro: Macro) =>
+            setMacros((prev) =>
+              prev.map((m) => (m.id === macro.id ? macro : m)),
+            )
+          }
+        />
+      )}
       <section className={styles.macroSectionStyles}>
         {filteredMacros.map((macro) => (
-          <MacroCard
-            key={macro.id}
-            title={macro.title}
-            content={macro.content}
-            showToast={showToastCallback}
-          />
+          <div key={macro.id}>
+            <DropdownButton Icon={FaEllipsis}>
+              <TextButton
+                text="Edit"
+                styles=""
+                tooltip="Edit Macro"
+                onClick={() => onEditMacroBtnClick(macro)}
+              />
+              <TextButton
+                text="Delete"
+                styles=""
+                tooltip="Delete Macro"
+                onClick={() => {
+                  handleDelete(macro.id, showToastCallback);
+                  setMacros((prev) => prev.filter((m) => m.id != macro.id));
+                }}
+              />
+              <TextButton
+                text="Copy"
+                styles=""
+                tooltip="Copy Macro Content"
+                onClick={() => handleCopy(macro.content, showToastCallback)}
+              />
+            </DropdownButton>
+            <MacroCard
+              title={macro.title}
+              content={macro.content}
+              showToast={showToastCallback}
+            />
+          </div>
         ))}
       </section>
       {toast && <Toast type={toast.type} msg={toast.msg} />}
