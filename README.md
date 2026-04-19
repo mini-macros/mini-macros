@@ -22,11 +22,11 @@ First TODOS:
 - [x] setup macro editing and deletion
 - [x] connect Macro CRUD operations to components
 - [x] populate editor with existing data when editing macro
+- [x] add DropdownButton "inside" MacroCard visually
 - [ ] add export macros to JSON
 - [ ] add import macros from JSON
 - [ ] make welcome modal
-- [ ] add DropdownButton "inside" MacroCard visually
-- [ ] create menu for other pages
+- [ ] create menu for export, import, and other pages
 - [ ] create backend server
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor

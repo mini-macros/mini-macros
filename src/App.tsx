@@ -15,6 +15,7 @@ import { FaPlus } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
 import * as styles from "./styles/app-styles";
+import { dropdownChildStyles } from "./styles/macro-styles";
 
 function App() {
   const [createMacroModalShow, setCreateMacroModalShow] = useState(false);
@@ -84,7 +85,6 @@ function App() {
   const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
 
-  // TODO: add menu button/dropdown
   return (
     <div className={styles.baseStyles}>
       <nav className={styles.navStyles}>
@@ -116,34 +116,38 @@ function App() {
       <section className={styles.macroSectionStyles}>
         {filteredMacros.map((macro) => (
           <div key={macro.id}>
-            <DropdownButton Icon={FaEllipsis}>
-              <TextButton
-                text="Edit"
-                styles=""
-                tooltip="Edit Macro"
-                onClick={() => onEditMacroBtnClick(macro)}
-              />
-              <TextButton
-                text="Delete"
-                styles=""
-                tooltip="Delete Macro"
-                onClick={() => {
-                  handleDelete(macro.id, showToastCallback);
-                  setMacros((prev) => prev.filter((m) => m.id != macro.id));
-                }}
-              />
-              <TextButton
-                text="Copy"
-                styles=""
-                tooltip="Copy Macro Content"
-                onClick={() => handleCopy(macro.content, showToastCallback)}
-              />
-            </DropdownButton>
             <MacroCard
               title={macro.title}
               content={macro.content}
               showToast={showToastCallback}
-            />
+            >
+              <DropdownButton
+                Icon={FaEllipsis}
+                position="absolute top-2 right-2"
+              >
+                <TextButton
+                  text="Edit"
+                  styles={dropdownChildStyles}
+                  tooltip="Edit Macro"
+                  onClick={() => onEditMacroBtnClick(macro)}
+                />
+                <TextButton
+                  text="Delete"
+                  styles={dropdownChildStyles}
+                  tooltip="Delete Macro"
+                  onClick={() => {
+                    handleDelete(macro.id, showToastCallback);
+                    setMacros((prev) => prev.filter((m) => m.id != macro.id));
+                  }}
+                />
+                <TextButton
+                  text="Copy"
+                  styles={dropdownChildStyles}
+                  tooltip="Copy Macro Content"
+                  onClick={() => handleCopy(macro.content, showToastCallback)}
+                />
+              </DropdownButton>
+            </MacroCard>
           </div>
         ))}
       </section>

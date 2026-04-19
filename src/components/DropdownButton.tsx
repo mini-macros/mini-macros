@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import type { DropdownButtonProps } from "../types/props";
-import { dropdownBtnStyles, dropdownChildStyles } from "../styles/macro-styles";
+import {
+  dropdownBtnStyles,
+  dropdownChildrenStyles,
+} from "../styles/macro-styles";
 
-function DropdownButton({ Icon, children }: DropdownButtonProps) {
+function DropdownButton({ Icon, position, children }: DropdownButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -17,14 +20,14 @@ function DropdownButton({ Icon, children }: DropdownButtonProps) {
   }, []);
 
   return (
-    <div ref={divRef} className="relative">
+    <div ref={divRef} className={position}>
       <button
         className={dropdownBtnStyles}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <Icon size={24} />
       </button>
-      {isOpen && <div className={dropdownChildStyles}>{children}</div>}
+      {isOpen && <div className={dropdownChildrenStyles}>{children}</div>}
     </div>
   );
 }

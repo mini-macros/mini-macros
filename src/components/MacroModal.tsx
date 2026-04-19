@@ -3,7 +3,7 @@ import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 import MacroContentEditor from "./MacroContentEditor";
 import { IoClose } from "react-icons/io5";
-import * as styles from "../styles/create-macro-styles";
+import * as styles from "../styles/macro-modal-styles";
 
 function MacroModal({
   modalTitle,

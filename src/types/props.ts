@@ -2,7 +2,7 @@ import { Editor } from "@tiptap/core";
 import type { IconType } from "react-icons";
 import type { Macro } from "./types";
 
-export interface MacroCardProps {
+export interface MacroCardProps extends React.PropsWithChildren {
   title: string;
   content: string;
   showToast: (msg: string, type: ToastState) => void;
@@ -44,6 +44,7 @@ export interface MacroSaveProps {
 
 export interface DropdownButtonProps extends React.PropsWithChildren {
   Icon: IconType;
+  position: string;
 }
 
 export interface IconButtonProps {
