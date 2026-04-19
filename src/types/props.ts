@@ -8,13 +8,26 @@ export interface MacroCardProps {
   showToast: (msg: string, type: ToastState) => void;
 }
 
-export interface MacroModalProps {
-  modalTitle: string;
+export interface CreateMacroModalProps {
   onClose: () => void;
-  isCreate: boolean;
-  macro?: Macro;
   showToast: (msg: string, type: ToastState) => void;
   onMacroChange: (macro: Macro) => void;
+}
+
+export interface EditMacroModalProps {
+  onClose: () => void;
+  macro: Macro;
+  showToast: (msg: string, type: ToastState) => void;
+  onMacroChange: (macro: Macro) => void;
+}
+
+export interface MacroModalProps {
+  modalTitle: string;
+  macroTitle: string;
+  editor: Editor;
+  onClose: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
 }
 
 export interface MacroContentEditorProps {

@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
-import MacroModal from "./components/MacroModal";
+import EditMacroModal from "./components/EditMacroModal";
+import CreateMacroModal from "./components/CreateMacroModal";
 import MacroCard from "./components/MacroCard";
 import Toast from "./components/Toast";
 import SearchBar from "./components/SearchBar";
@@ -92,10 +93,8 @@ function App() {
         <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
       </nav>
       {createMacroModalShow && (
-        <MacroModal
-          modalTitle="Create New Macro"
+        <CreateMacroModal
           onClose={onCreateMacroClose}
-          isCreate={true}
           showToast={showToastCallback}
           onMacroChange={(macro: Macro) =>
             setMacros((prev) => [...prev, macro])
@@ -103,12 +102,10 @@ function App() {
         />
       )}
       {editMacroModalShow && selectedMacro && (
-        <MacroModal
-          modalTitle="Edit Macro"
+        <EditMacroModal
           onClose={onEditMacroClose}
-          isCreate={false}
-          showToast={showToastCallback}
           macro={selectedMacro}
+          showToast={showToast}
           onMacroChange={(macro: Macro) =>
             setMacros((prev) =>
               prev.map((m) => (m.id === macro.id ? macro : m)),
