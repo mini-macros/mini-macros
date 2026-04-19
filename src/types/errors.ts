@@ -24,3 +24,7 @@ export enum MacroErrorCode {
   MACRO_NOT_FOUND = 404,
   UNHANDLED_EXCEPTION = 500,
 }
+
+export enum JsonErrorCode {
+  UNPARSABLE_FILES,
+}

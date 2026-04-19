@@ -25,6 +25,8 @@ First TODOS:
 - [x] add DropdownButton "inside" MacroCard visually
 - [ ] add export macros to JSON
 - [ ] add import macros from JSON
+- [ ] create favicon
+- [ ] create logo/title
 - [ ] make welcome modal
 - [ ] create menu for export, import, and other pages
 - [ ] create backend server

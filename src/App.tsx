@@ -30,11 +30,6 @@ function App() {
   );
   const [search, setSearch] = useState("");
 
-  const onCreateMacroBtnClick = () => setCreateMacroModalShow(true);
-  const onCreateMacroClose = () => {
-    setCreateMacroModalShow(false);
-  };
-
   const onEditMacroBtnClick = (macro: Macro) => {
     setSelectedMacro(macro);
     setEditMacroModalShow(true);
@@ -56,9 +51,6 @@ function App() {
     setToast({ msg, type });
     setTimeout(() => setToast(null), COUNTDOWN_TIME_MS);
   };
-
-  const showToastCallback = (msg: string, type: ToastState) =>
-    showToast(msg, type);
 
   useEffect(() => {
     async function fetchMacros() {
@@ -82,20 +74,17 @@ function App() {
     );
   }, [macros, search]);
 
-  const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSearch(e.target.value);
-
   return (
     <div className={styles.baseStyles}>
       <nav className={styles.navStyles}>
-        <CreateMacroButton onClick={onCreateMacroBtnClick} />
-        <SearchBar text={search} onChange={searchOnChange} />
+        <CreateMacroButton onClick={() => setCreateMacroModalShow(true)} />
+        <SearchBar text={search} onChange={(e) => setSearch(e.target.value)} />
         <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
       </nav>
       {createMacroModalShow && (
         <CreateMacroModal
-          onClose={onCreateMacroClose}
-          showToast={showToastCallback}
+          onClose={() => setCreateMacroModalShow(false)}
+          showToast={showToast}
           onMacroChange={(macro: Macro) =>
             setMacros((prev) => [...prev, macro])
           }
@@ -119,7 +108,7 @@ function App() {
             <MacroCard
               title={macro.title}
               content={macro.content}
-              showToast={showToastCallback}
+              showToast={showToast}
             >
               <DropdownButton
                 Icon={FaEllipsis}
@@ -136,7 +125,7 @@ function App() {
                   styles={dropdownChildStyles}
                   tooltip="Delete Macro"
                   onClick={() => {
-                    handleDelete(macro.id, showToastCallback);
+                    handleDelete(macro.id, showToast);
                     setMacros((prev) => prev.filter((m) => m.id != macro.id));
                   }}
                 />
@@ -144,7 +133,7 @@ function App() {
                   text="Copy"
                   styles={dropdownChildStyles}
                   tooltip="Copy Macro Content"
-                  onClick={() => handleCopy(macro.content, showToastCallback)}
+                  onClick={() => handleCopy(macro.content, showToast)}
                 />
               </DropdownButton>
             </MacroCard>
