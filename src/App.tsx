@@ -6,11 +6,12 @@ import Toast from "./components/Toast";
 import SearchBar from "./components/SearchBar";
 import DropdownButton from "./components/DropdownButton";
 import TextButton from "./components/TextButton";
+import IconButton from "./components/IconButton";
 import { ToastState } from "./types/props";
 import type { Macro } from "./types/types";
 import { getMacros } from "./utils/macro-crud";
 import { handleCopy, handleDelete } from "./utils/macro-handlers";
-import IconButton from "./components/IconButton";
+import BrandLogo from "../public/brand-logo.svg?react";
 import { FaPlus } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
@@ -76,11 +77,17 @@ function App() {
 
   return (
     <div className={styles.baseStyles}>
-      <nav className={styles.navStyles}>
-        <CreateMacroButton onClick={() => setCreateMacroModalShow(true)} />
-        <SearchBar text={search} onChange={(e) => setSearch(e.target.value)} />
-        <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
-      </nav>
+      <header>
+        <BrandLogo className="block mx-auto mt-4 h-12 fill-current text-text" />
+        <nav className={styles.navStyles}>
+          <CreateMacroButton onClick={() => setCreateMacroModalShow(true)} />
+          <SearchBar
+            text={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <DarkModeToggleButton isDark={isDark} onClick={toggleTheme} />
+        </nav>
+      </header>
       {createMacroModalShow && (
         <CreateMacroModal
           onClose={() => setCreateMacroModalShow(false)}

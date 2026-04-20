@@ -1,13 +1,15 @@
 /// <reference types="vitest/config" />
+/// <reference types="vite-plugin-svgr/client" />
 
 import { defineConfig } from "vite";
 import { playwright } from "@vitest/browser-playwright";
+import svgr from "vite-plugin-svgr";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), svgr()],
   test: {
     reporters: [["verbose", { summary: false }]],
     projects: [
