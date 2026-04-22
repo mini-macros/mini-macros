@@ -11,7 +11,7 @@ import { ToastState } from "./types/props";
 import type { Macro } from "./types/types";
 import { getMacros } from "./utils/macro-crud";
 import { handleCopy, handleDelete } from "./utils/macro-handlers";
-import BrandLogo from "../public/brand-logo.svg?react";
+import BrandLogo from "./assets/brand-logo.svg?react";
 import { FaPlus } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
@@ -78,7 +78,7 @@ function App() {
   return (
     <div className={styles.baseStyles}>
       <header>
-        <BrandLogo className="block mx-auto mt-4 h-12 fill-current text-text" />
+        <BrandLogo className={styles.brandLogoStyles} />
         <nav className={styles.navStyles}>
           <CreateMacroButton onClick={() => setCreateMacroModalShow(true)} />
           <SearchBar
@@ -119,6 +119,7 @@ function App() {
             >
               <DropdownButton
                 Icon={FaEllipsis}
+                title={macro.title + " Dropdown"}
                 position="absolute top-2 right-2"
               >
                 <TextButton

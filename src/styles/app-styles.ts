@@ -1,4 +1,5 @@
 export const baseStyles = "font-mono";
+export const brandLogoStyles = "block mx-auto mt-4 h-12 fill-current text-text";
 export const navStyles =
   "flex flex-row items-center justify-between p-2 m-5 max-h-18 border-1 border-border bg-bg rounded-full shadow-md";
 export const createMacroBtnStyles =

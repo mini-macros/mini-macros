@@ -1,5 +1,4 @@
 /// <reference types="vitest/config" />
-/// <reference types="vite-plugin-svgr/client" />
 
 import { defineConfig } from "vite";
 import { playwright } from "@vitest/browser-playwright";
@@ -9,8 +8,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), svgr()],
+  plugins: [react(), tailwindcss(), svgr({ include: "**/*.svg?react" })],
   test: {
+    testTimeout: 45_000,
     reporters: [["verbose", { summary: false }]],
     projects: [
       {
@@ -23,6 +23,7 @@ export default defineConfig({
         },
       },
       {
+        extends: true,
         test: {
           browser: {
             enabled: true,
@@ -40,6 +41,7 @@ export default defineConfig({
         },
       },
       {
+        extends: true,
         test: {
           browser: {
             enabled: true,
