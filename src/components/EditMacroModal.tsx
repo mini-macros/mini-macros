@@ -20,6 +20,11 @@ function EditMacroModal({
 }: EditMacroModalProps) {
   const editor = useEditor({
     extensions: [TextStyleKit, StarterKit],
+    editorProps: {
+      attributes: {
+        "data-testid": "editor",
+      },
+    },
   });
   const [title, setTitle] = useState(macro.title);
 

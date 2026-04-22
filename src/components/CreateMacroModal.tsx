@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useEditor } from "@tiptap/react";
 import MacroModal from "./MacroModal";
 import { TextStyleKit } from "@tiptap/extension-text-style";
@@ -19,6 +19,11 @@ function CreateMacroModal({
 }: CreateMacroModalProps) {
   const editor = useEditor({
     extensions: [TextStyleKit, StarterKit],
+    editorProps: {
+      attributes: {
+        "data-testid": "editor",
+      },
+    },
   });
   const [title, setTitle] = useState("");
 

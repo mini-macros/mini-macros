@@ -5,7 +5,12 @@ import {
   dropdownChildrenStyles,
 } from "../styles/macro-styles";
 
-function DropdownButton({ Icon, position, children }: DropdownButtonProps) {
+function DropdownButton({
+  Icon,
+  position,
+  title,
+  children,
+}: DropdownButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +27,7 @@ function DropdownButton({ Icon, position, children }: DropdownButtonProps) {
   return (
     <div ref={divRef} className={position}>
       <button
+        title={title}
         className={dropdownBtnStyles}
         onClick={() => setIsOpen((prev) => !prev)}
       >

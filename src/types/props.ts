@@ -45,6 +45,7 @@ export interface MacroSaveProps {
 export interface DropdownButtonProps extends React.PropsWithChildren {
   Icon: IconType;
   position: string;
+  title: string;
 }
 
 export interface IconButtonProps {
