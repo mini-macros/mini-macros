@@ -28,6 +28,7 @@ function MacroModal({
       <input
         className={styles.inputStyles}
         name="macro-title"
+        title="macro-title"
         type="text"
         maxLength={64}
         placeholder={macroTitle === "" ? "My Macro" : ""}

@@ -10,7 +10,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss(), svgr({ include: "**/*.svg?react" })],
   test: {
-    testTimeout: 45_000,
     reporters: [["verbose", { summary: false }]],
     projects: [
       {

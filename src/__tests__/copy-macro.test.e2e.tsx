@@ -25,7 +25,7 @@ test("create macro and copy its contents", async () => {
   await saveBtn.click();
 
   const createdMacro = page.getByRole("button", {
-    name: `${sampleTitle}`,
+    name: sampleTitle,
     exact: true,
   });
   await expect.element(createdMacro).not.toBeNull();
