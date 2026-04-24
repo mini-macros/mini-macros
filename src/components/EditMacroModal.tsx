@@ -33,6 +33,8 @@ function EditMacroModal({
       editor.commands.clearContent();
       editor.commands.insertContent(`<p>${macro.content}</p>`);
     }
+
+    return () => editor.destroy();
   }, [macro, editor]);
 
   const saveFunc = () => {

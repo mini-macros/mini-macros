@@ -25,4 +25,5 @@ export function handleDelete(
     showToast(err.message, ToastState.ERROR);
     return;
   }
+  showToast("Macro deleted successfully!", ToastState.SUCCESS);
 }

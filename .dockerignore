@@ -1,0 +1,14 @@
+node_modules/
+.vitest-attachments/
+.git/
+
+.gitignore
+.dockerignore
+
+__tests__/
+./**/*.test.tsx
+./**/*.test.ts
+
+README.md
+CONTRIBUTING.md
+LICENSE.md

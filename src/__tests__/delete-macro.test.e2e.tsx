@@ -1,10 +1,14 @@
 import { render } from "vitest-browser-react";
 import { expect, test, beforeEach } from "vitest";
-import { page } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
 import App from "../App";
 import { getMacroByTitle } from "../utils/macro-crud";
 
-beforeEach(() => localStorage.clear());
+beforeEach(async () => {
+  localStorage.clear();
+  window.focus();
+  await navigator.clipboard.writeText("");
+});
 
 test("create macro and delete it", async () => {
   await render(<App />);
@@ -17,13 +21,17 @@ test("create macro and delete it", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
@@ -40,6 +48,7 @@ test("create macro and delete it", async () => {
   await expect.element(deleteBtn).toBeVisible();
 
   await deleteBtn.click();
+
   await expect.element(createdMacro).not.toBeInTheDocument();
   await expect(getMacroByTitle(sampleTitle)).resolves.toBeFalsy();
 });
@@ -72,13 +81,17 @@ test("create multiple macros and delete only one", async () => {
     await createMacroBtn.click();
 
     const titleBox = page.getByPlaceholder("My Macro");
-    await titleBox.fill(macro.title);
+    await userEvent.fill(titleBox, macro.title);
 
     const editor = page.getByTestId("editor");
-    await editor.fill(macro.content);
+    await editor.click();
+    await userEvent.fill(editor, macro.content);
+    expect(editor).toHaveTextContent(macro.content);
 
     const saveBtn = page.getByRole("button", { name: "Save" });
     await saveBtn.click();
+
+    await expect.element(editor).not.toBeInTheDocument();
 
     const createdMacro = page.getByRole("button", {
       name: macro.title,
@@ -101,6 +114,7 @@ test("create multiple macros and delete only one", async () => {
   await expect.element(deleteBtn).toBeVisible();
 
   await deleteBtn.click();
+
   await expect.element(macroToDelete).not.toBeInTheDocument();
   await expect(getMacroByTitle(testMacros[0].title)).resolves.toBeFalsy();
 });

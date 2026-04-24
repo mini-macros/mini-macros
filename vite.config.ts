@@ -11,6 +11,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), svgr({ include: "**/*.svg?react" })],
   test: {
     reporters: [["verbose", { summary: false }]],
+    isolate: true,
+    fileParallelism: false,
     projects: [
       {
         test: {

@@ -20,6 +20,9 @@ import { dropdownChildStyles } from "./styles/macro-styles";
 
 function App() {
   const [createMacroModalShow, setCreateMacroModalShow] = useState(false);
+  const [createMacroModalKey, setCreateMacroModalKey] = useState(
+    crypto.randomUUID(),
+  );
   const [editMacroModalShow, setEditMacroModalShow] = useState(false);
   const [selectedMacro, setSelectedMacro] = useState<Macro | null>(null);
   const [isDark, setIsDark] = useState(
@@ -30,6 +33,11 @@ function App() {
     null,
   );
   const [search, setSearch] = useState("");
+
+  const onCreateMacroBtnClick = () => {
+    setCreateMacroModalShow(true);
+    setCreateMacroModalKey(crypto.randomUUID());
+  };
 
   const onEditMacroBtnClick = (macro: Macro) => {
     setSelectedMacro(macro);
@@ -90,6 +98,7 @@ function App() {
       </header>
       {createMacroModalShow && (
         <CreateMacroModal
+          key={createMacroModalKey}
           onClose={() => setCreateMacroModalShow(false)}
           showToast={showToast}
           onMacroChange={(macro: Macro) =>
@@ -99,6 +108,7 @@ function App() {
       )}
       {editMacroModalShow && selectedMacro && (
         <EditMacroModal
+          key={selectedMacro.id}
           onClose={onEditMacroClose}
           macro={selectedMacro}
           showToast={showToast}

@@ -1,15 +1,17 @@
 import { render } from "vitest-browser-react";
-import { page } from "vitest/browser";
-import { expect, test, beforeEach } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { vi, expect, test, beforeEach } from "vitest";
 import App from "../App";
 import { getMacroByTitle } from "../utils/macro-crud";
 
-beforeEach(() => localStorage.clear());
+beforeEach(async () => {
+  localStorage.clear();
+  window.focus();
+  await navigator.clipboard.writeText("");
+});
 
 test("create macro and copy its contents", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const sampleTitle = "my title";
   const sampleContent = "very cool content";
 
@@ -17,13 +19,17 @@ test("create macro and copy its contents", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
@@ -34,14 +40,21 @@ test("create macro and copy its contents", async () => {
   await expect(getMacroByTitle(sampleTitle)).resolves.not.toBeFalsy();
 
   await createdMacro.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(sampleContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create macro and copy content from dropdown", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const sampleTitle = "my title";
   const sampleContent = "very cool content";
 
@@ -49,13 +62,17 @@ test("create macro and copy content from dropdown", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
@@ -72,14 +89,21 @@ test("create macro and copy content from dropdown", async () => {
   await expect.element(copyBtn).toBeVisible();
 
   await copyBtn.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(sampleContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create multiple macros and copy the contents of one with a click", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const testMacros = [
     {
       title: "cool title",
@@ -104,13 +128,17 @@ test("create multiple macros and copy the contents of one with a click", async (
     await createMacroBtn.click();
 
     const titleBox = page.getByPlaceholder("My Macro");
-    await titleBox.fill(macro.title);
+    await userEvent.fill(titleBox, macro.title);
 
     const editor = page.getByTestId("editor");
-    await editor.fill(macro.content);
+    await editor.click();
+    await userEvent.fill(editor, macro.content);
+    expect(editor).toHaveTextContent(macro.content);
 
     const saveBtn = page.getByRole("button", { name: "Save" });
     await saveBtn.click();
+
+    await expect.element(editor).not.toBeInTheDocument();
 
     const createdMacro = page.getByRole("button", {
       name: macro.title,
@@ -127,14 +155,21 @@ test("create multiple macros and copy the contents of one with a click", async (
   });
 
   await macroToCopy.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(testMacros[0].content);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(testMacros[0].content);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create multiple macros and copy the contents of one with dropdown button", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const testMacros = [
     {
       title: "cool title",
@@ -159,13 +194,17 @@ test("create multiple macros and copy the contents of one with dropdown button",
     await createMacroBtn.click();
 
     const titleBox = page.getByPlaceholder("My Macro");
-    await titleBox.fill(macro.title);
+    await userEvent.fill(titleBox, macro.title);
 
     const editor = page.getByTestId("editor");
-    await editor.fill(macro.content);
+    await editor.click();
+    await userEvent.fill(editor, macro.content);
+    expect(editor).toHaveTextContent(macro.content);
 
     const saveBtn = page.getByRole("button", { name: "Save" });
     await saveBtn.click();
+
+    await expect.element(editor).not.toBeInTheDocument();
 
     const createdMacro = page.getByRole("button", {
       name: macro.title,
@@ -183,6 +222,15 @@ test("create multiple macros and copy the contents of one with dropdown button",
   await expect.element(copyBtn).toBeVisible();
 
   await copyBtn.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(testMacros[0].content);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(testMacros[0].content);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });

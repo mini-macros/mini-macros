@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useEditor } from "@tiptap/react";
 import MacroModal from "./MacroModal";
 import { TextStyleKit } from "@tiptap/extension-text-style";
@@ -27,6 +27,10 @@ function CreateMacroModal({
   });
   const [title, setTitle] = useState("");
 
+  useEffect(() => {
+    return () => editor.destroy();
+  }, [editor]);
+
   const saveFunc = () => {
     void onCreateSave({ editor, title, showToast })
       .then((resultMacro) => {
@@ -34,12 +38,12 @@ function CreateMacroModal({
           onMacroChange(resultMacro);
           showToast("Macro created successfully", ToastState.SUCCESS);
         }
+        onClose();
       })
       .catch((error) => {
         showToast("Unable to save macro.", ToastState.ERROR);
         console.error(error);
       });
-    onClose();
   };
 
   return (

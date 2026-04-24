@@ -1,15 +1,17 @@
 import { render } from "vitest-browser-react";
-import { page } from "vitest/browser";
-import { expect, test, beforeEach } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { vi, expect, test, beforeEach } from "vitest";
 import App from "../App";
 import { getMacroByTitle } from "../utils/macro-crud";
 
-beforeEach(() => localStorage.clear());
+beforeEach(async () => {
+  localStorage.clear();
+  window.focus();
+  await navigator.clipboard.writeText("");
+});
 
 test("create macro and edit its content", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const sampleTitle = "my title";
   const sampleContent = "very cool content";
   const expectedContent = "even cooler content";
@@ -18,13 +20,17 @@ test("create macro and edit its content", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
@@ -35,8 +41,17 @@ test("create macro and edit its content", async () => {
   await expect(getMacroByTitle(sampleTitle)).resolves.not.toBeFalsy();
 
   await createdMacro.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(sampleContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 
   const dropdownBtn = page.getByTitle(sampleTitle + " Dropdown");
   await dropdownBtn.click();
@@ -45,20 +60,31 @@ test("create macro and edit its content", async () => {
   await expect.element(editBtn).toBeVisible();
   await editBtn.click();
 
-  await editor.fill(expectedContent);
+  await editor.click();
+  await userEvent.fill(editor, expectedContent);
+  expect(editor).toHaveTextContent(expectedContent);
+
   await saveBtn.click();
 
+  await expect.element(editor).not.toBeInTheDocument();
   await expect.element(createdMacro).not.toBeNull();
 
   await createdMacro.click();
-  const newClipboardContents = await navigator.clipboard.readText();
-  expect(newClipboardContents).toEqual(expectedContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(expectedContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create macro and edit its title", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const sampleTitle = "my title";
   const sampleContent = "very cool content";
   const expectedTitle = "new and improved title";
@@ -67,13 +93,17 @@ test("create macro and edit its title", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
@@ -84,8 +114,17 @@ test("create macro and edit its title", async () => {
   await expect(getMacroByTitle(sampleTitle)).resolves.not.toBeFalsy();
 
   await createdMacro.click();
-  const clipboardContents = await navigator.clipboard.readText();
-  expect(clipboardContents).toEqual(sampleContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 
   const dropdownBtn = page.getByTitle(sampleTitle + " Dropdown");
   await dropdownBtn.click();
@@ -95,9 +134,11 @@ test("create macro and edit its title", async () => {
   await editBtn.click();
 
   const editTitleBox = page.getByTitle("macro-title");
-  await editTitleBox.fill(expectedTitle);
+  await userEvent.fill(editTitleBox, expectedTitle);
 
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const editedMacro = page.getByRole("button", {
     name: expectedTitle,
@@ -106,14 +147,21 @@ test("create macro and edit its title", async () => {
   await expect.element(editedMacro).not.toBeNull();
 
   await editedMacro.click();
-  const newClipboardContents = await navigator.clipboard.readText();
-  expect(newClipboardContents).toEqual(sampleContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create macro and edit title and content", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const sampleTitle = "my title";
   const sampleContent = "very cool content";
   const expectedTitle = "new and improved title";
@@ -123,19 +171,36 @@ test("create macro and edit title and content", async () => {
   await createMacroBtn.click();
 
   const titleBox = page.getByPlaceholder("My Macro");
-  await titleBox.fill(sampleTitle);
+  await userEvent.fill(titleBox, sampleTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(sampleContent);
+  await editor.click();
+  await userEvent.fill(editor, sampleContent);
+  expect(editor).toHaveTextContent(sampleContent);
 
   const saveBtn = page.getByRole("button", { name: "Save" });
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const createdMacro = page.getByRole("button", {
     name: sampleTitle,
     exact: true,
   });
   await expect.element(createdMacro).not.toBeNull();
+
+  await createdMacro.click();
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(sampleContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 
   await expect(getMacroByTitle(sampleTitle)).resolves.not.toBeFalsy();
 
@@ -147,11 +212,15 @@ test("create macro and edit title and content", async () => {
   await editBtn.click();
 
   const editTitleBox = page.getByTitle("macro-title");
-  await editTitleBox.fill(expectedTitle);
+  await userEvent.fill(editTitleBox, expectedTitle);
 
-  await editor.fill(expectedContent);
+  await editor.click();
+  await userEvent.fill(editor, expectedContent);
+  expect(editor).toHaveTextContent(expectedContent);
 
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const editedMacro = page.getByRole("button", {
     name: expectedTitle,
@@ -162,14 +231,21 @@ test("create macro and edit title and content", async () => {
   await expect(getMacroByTitle(expectedTitle)).resolves.not.toBeFalsy();
 
   await editedMacro.click();
-  const newClipboardContents = await navigator.clipboard.readText();
-  expect(newClipboardContents).toEqual(expectedContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(expectedContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
 
 test("create multiple macros and edit title and contents of one", async () => {
   await render(<App />);
-  window.focus();
-  await navigator.clipboard.writeText("");
   const testMacros = [
     {
       title: "cool title",
@@ -196,13 +272,17 @@ test("create multiple macros and edit title and contents of one", async () => {
     await createMacroBtn.click();
 
     const titleBox = page.getByPlaceholder("My Macro");
-    await titleBox.fill(macro.title);
+    await userEvent.fill(titleBox, macro.title);
 
     const editor = page.getByTestId("editor");
-    await editor.fill(macro.content);
+    await editor.click();
+    await userEvent.fill(editor, macro.content);
+    expect(editor).toHaveTextContent(macro.content);
 
     const saveBtn = page.getByRole("button", { name: "Save" });
     await saveBtn.click();
+
+    await expect.element(editor).not.toBeInTheDocument();
 
     const createdMacro = page.getByRole("button", {
       name: macro.title,
@@ -222,13 +302,19 @@ test("create multiple macros and edit title and contents of one", async () => {
   await editBtn.click();
 
   const editTitleBox = page.getByTitle("macro-title");
-  await editTitleBox.fill(expectedTitle);
+  await userEvent.fill(editTitleBox, expectedTitle);
 
   const editor = page.getByTestId("editor");
-  await editor.fill(expectedContent);
+  await editor.click();
+  await userEvent.fill(editor, expectedContent);
+  expect(editor).toHaveTextContent(expectedContent);
+  expect(getMacroByTitle(expectedTitle)).not.toBeNull();
 
   const saveBtn = page.getByRole("button", { name: "Save" });
+  expect(saveBtn).toBeVisible();
   await saveBtn.click();
+
+  await expect.element(editor).not.toBeInTheDocument();
 
   const editedMacro = page.getByRole("button", {
     name: expectedTitle,
@@ -239,6 +325,15 @@ test("create multiple macros and edit title and contents of one", async () => {
   await expect(getMacroByTitle(expectedTitle)).resolves.not.toBeFalsy();
 
   await editedMacro.click();
-  const newClipboardContents = await navigator.clipboard.readText();
-  expect(newClipboardContents).toEqual(expectedContent);
+
+  await vi.waitFor(
+    async () => {
+      const clipboardContents = await navigator.clipboard.readText();
+      expect(clipboardContents).toEqual(expectedContent);
+    },
+    {
+      timeout: 5_000,
+      interval: 100,
+    },
+  );
 });
