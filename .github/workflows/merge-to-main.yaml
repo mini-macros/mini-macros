@@ -28,9 +28,6 @@ jobs:
     steps:
       - name: Checkout PR Branch
         uses: actions/checkout@v6
-      - name: Approve if Repository Owner
-        if: ${{ github.actor }} ==  ${{ github.repository_owner}}
-        run: gh pr review --approve "${{ github.event.pull_request.number }}"
       - name: Automatically Merge PR
         run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
         env:
