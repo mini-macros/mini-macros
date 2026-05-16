@@ -15,27 +15,17 @@ jobs:
           node-version: "24"
           cache: "npm"
       - name: Install Dependencies
-<<<<<<< HEAD
         run: npm ci
-<<<<<<< HEAD
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Running Tests
-        run: npm run test
-=======
-=======
-        run: npm ci && npm playwright install
->>>>>>> f5ebbce (add playwright installation deps)
+        run: npm playwright install --with-deps
       - name: Running Tests
         run: npm run test
       - name: Check Test Coverage
         run: npm run coverage
->>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
   auto-merge:
     runs-on: ubuntu-24.04
     needs: test-branch
     steps:
-<<<<<<< HEAD
       - name: Checkout PR Branch
         uses: actions/checkout@v6
       - name: Automatically Merge PR for Administrators
@@ -43,9 +33,3 @@ jobs:
         run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-=======
-      - name: Automatically Merge PR
-        run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
->>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
