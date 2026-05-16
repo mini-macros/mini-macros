@@ -42,9 +42,6 @@ jobs:
           tags: tag:cicd
           args: --accept-dns
 
-      - name: Check Tailscale status
-        run: tailscale status
-
       - name: Add Host to known_hosts on Runner
         run: |
           mkdir -p ~/.ssh
