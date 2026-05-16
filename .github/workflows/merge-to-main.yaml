@@ -1,0 +1,30 @@
+name: Merge PR to Main Branch
+run-name: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }} is being approved to merge into the main branch
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test-branch:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Running Tests
+        run: npm run test
+      - name: Check Test Coverage
+        run: npm run coverage
+  auto-merge:
+    runs-on: ubuntu-24.04
+    needs: test-branch
+    steps:
+      - name: Automatically Merge PR
+        run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -12,3 +12,6 @@ __tests__/
 README.md
 CONTRIBUTING.md
 LICENSE.md
+
+Dockerfile*
+server/
