@@ -23,13 +23,15 @@ First TODOS:
 - [x] connect Macro CRUD operations to components
 - [x] populate editor with existing data when editing macro
 - [x] add DropdownButton "inside" MacroCard visually
+- [x] create favicon
+- [x] create logo/title
+- [ ] setup github actions ci/cd
 - [ ] add export macros to JSON
 - [ ] add import macros from JSON
-- [ ] create favicon
-- [ ] create logo/title
 - [ ] make welcome modal
 - [ ] create menu for export, import, and other pages
 - [ ] create backend server
 - [ ] style and finish FixedMenu for MacroContentEditor component
 - [ ] handle image compression and file handling for MacroContentEditor
 - [ ] add failsafes for required data in CreateMacroModal
+- [ ] create public facing README and add todos to github issues
