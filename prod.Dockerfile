@@ -3,7 +3,11 @@ FROM --platform=$BUILDPLATFORM node:24.12-alpine3.23 AS build
 WORKDIR /src
 
 COPY package*.json ./
+
+RUN npm install -g npm@11.14.1
+
 RUN npm ci
+RUN npm audit fix
 
 COPY . .
 
