@@ -40,6 +40,7 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
           tags: tag:cicd
+          args: --accept-dns
 
       - name: Add Host to known_hosts on Runner
         run: |
