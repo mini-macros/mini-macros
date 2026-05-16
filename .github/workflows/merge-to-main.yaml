@@ -28,7 +28,8 @@ jobs:
     steps:
       - name: Checkout PR Branch
         uses: actions/checkout@v6
-      - name: Automatically Merge PR
-        run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+      - name: Automatically Merge PR for Administrators
+        if: ${{ github.event.pull_request.user.login }} == ${{ github.repository_owner }}
+        run: gh pr merge --auto --squash --admin "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
