@@ -52,5 +52,5 @@ jobs:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
           ssh deploy@${{ secrets.HOST_NAME }} \
-            "echo '$GHCR_TOKEN' | docker login -u ${{ secrets.GHCR_USERNAME }} --password-stdin \
+            "echo '$GHCR_TOKEN' | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin \
              && cd /srv && docker compose pull && docker compose up -d"
