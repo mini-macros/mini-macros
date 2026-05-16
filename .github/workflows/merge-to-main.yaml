@@ -15,7 +15,7 @@ jobs:
           node-version: "24"
           cache: "npm"
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci && npm playwright install
       - name: Running Tests
         run: npm run test
       - name: Check Test Coverage
