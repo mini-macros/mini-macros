@@ -13,6 +13,7 @@ FROM nginx:1.29.8-alpine3.23
 
 COPY --from=build /src/dist /usr/share/nginx/html/dist
 
+ENV NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
 COPY ./docker-entrypoint.d /docker-entrypoint.d
 RUN chmod +x /docker-entrypoint.d/00-entrypoint.envsh
 
