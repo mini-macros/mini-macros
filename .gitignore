@@ -25,3 +25,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# production directories and files
+prod.nginx.conf.template
+env/
+*.env
+prod.Dockerfile
+compose.prod.yaml
+docker-entrypoint.d/
+server/

@@ -7,9 +7,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
+<<<<<<< HEAD
     permissions:
       contents: read
       packages: write
+=======
+>>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
     steps:
       - name: Checkout main Branch
         uses: actions/checkout@v6
@@ -32,7 +35,11 @@ jobs:
         with:
           push: true
           platforms: linux/arm64
+<<<<<<< HEAD
           tags: ghcr.io/${{ github.repository_owner }}/${{ secrets.PACKAGE_NAME }}:latest
+=======
+          tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/${{ secrets.PACKAGE_NAME }}:latest
+>>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
 
       - name: Connect to Tailscale
         uses: tailscale/github-action@v4
@@ -40,10 +47,13 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
           tags: tag:cicd
+<<<<<<< HEAD
           args: --accept-dns
 
       - name: Check Tailscale status
         run: tailscale status
+=======
+>>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
 
       - name: Add Host to known_hosts on Runner
         run: |
@@ -55,5 +65,9 @@ jobs:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
           ssh deploy@${{ secrets.HOST_NAME }} \
+<<<<<<< HEAD
             "echo '$GHCR_TOKEN' | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin \
+=======
+            "echo '$GHCR_TOKEN' | docker login -u ${{ github.repository_owner }} --password-stdin \
+>>>>>>> 4eb6c31 (add Dockerfile, LICENSE, Github Actions, update .gitignore, .dockerignore, README)
              && cd /srv && docker compose pull && docker compose up -d"
