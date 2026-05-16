@@ -15,6 +15,7 @@ jobs:
           node-version: "24"
           cache: "npm"
       - name: Install Dependencies
+<<<<<<< HEAD
         run: npm ci
 <<<<<<< HEAD
       - name: Install Playwright Browsers
@@ -22,6 +23,9 @@ jobs:
       - name: Running Tests
         run: npm run test
 =======
+=======
+        run: npm ci && npm playwright install
+>>>>>>> f5ebbce (add playwright installation deps)
       - name: Running Tests
         run: npm run test
       - name: Check Test Coverage
