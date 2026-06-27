@@ -11,6 +11,6 @@ export const inputStyles =
 export const contentLabelStyles =
   "col-start-1 col-span-2 row-start-2 self-end justify-self-start text-text text-xl";
 export const macroContentEditorStyles =
-  "col-span-full row-start-3 row-span-4 mt-8 p-4 rounded-4xl bg-bg-light border-1 border-border text-text shadow-md focus-within:border-2 focus-within:border-accent";
+  "col-span-full row-start-3 row-span-4 overflow-y-auto mt-8 p-4 rounded-4xl bg-bg-light border-1 border-border text-text shadow-md focus-within:border-2 focus-within:border-accent";
 export const saveBtnStyles =
   "row-start-7 col-start-5 place-self-end w-24 h-8 rounded-full border-1 border-border bg-accent text-accent-text shadow-md hover:bg-accent-hover focus:bg-accent-hover focus:outline-none focus:border-2 focus:border-accent";

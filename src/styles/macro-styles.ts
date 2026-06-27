@@ -1,5 +1,5 @@
 export const macroStyles =
-  "relative p-4 pt-12 pb-12 text-text text-center text-wrap break-all align-middle rounded-3xl h-48 w-64 cursor-pointer border-1 border-border bg-bg shadow-md hover:bg-bg-light";
+  "relative p-4 pt-12 pb-12 text-text text-center align-middle rounded-3xl h-48 w-64 cursor-pointer border-1 border-border bg-bg shadow-md hover:bg-bg-light";
 export const dropdownBtnStyles =
   "p-2 text-text border-1 border-border rounded-xl bg-bg shadow-md hover:bg-bg-light";
 export const dropdownChildrenStyles =
