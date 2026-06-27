@@ -7,7 +7,6 @@ COPY package*.json ./
 RUN npm install -g npm@11.14.1
 
 RUN npm ci
-RUN npm audit fix
 
 COPY . .
 
