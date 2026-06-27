@@ -1,5 +1,5 @@
 name: Merge PR to Main Branch
-run-name: ${{ github.event.pull_request.number - github.event.pull_request.title }} is being approved to merge into the main branch
+run-name: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }} is being approved to merge into the main branch
 on:
   pull_request:
     branches:
